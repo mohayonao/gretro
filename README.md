@@ -5,11 +5,16 @@
 [![Dependency Status](http://img.shields.io/david/mohayonao/gretro.svg?style=flat)](https://david-dm.org/mohayonao/gretro)
 [![devDependency Status](http://img.shields.io/david/dev/mohayonao/gretro.svg?style=flat)](https://david-dm.org/mohayonao/gretro)
 
-> **Gretro** is a library for vintage computer graphics.
+> **Gretro** is a JavaScript Graphic library for vintage CG.
+
+![splash](http://the.mohayonao.com/gretro/splash.png)
 
 ## Install
 
 browser
+
+  - [gretro.js](http://the.mohayonao.com/gretro/gretro.js)
+  - [gretro.min.js](http://the.mohayonao.com/gretro/gretro.min.js)
 
 ```html
 <script src="/path/to/gretro.js"></script>
