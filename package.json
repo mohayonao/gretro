@@ -1,7 +1,7 @@
 {
   "name": "gretro",
-  "description": "Gretro is a library for vintage computer graphics",
-  "version": "0.1.0",
+  "description": "Gretro is a JavaScript Graphic library for vintage CG",
+  "version": "0.1.1",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "license": "MIT",
   "repository": {
