@@ -1,0 +1,18 @@
+{
+  "curly"    : true,
+  "eqeqeq"   : true,
+  "forin"    : true,
+  "immed"    : true,
+  "latedef"  : true,
+  "newcap"   : true,
+  "noarg"    : true,
+  "noempty"  : true,
+  "nonew"    : true,
+  "undef"    : true,
+  "unused"   : true,
+  "strict"   : true,
+  "quotmark" : "double",
+  "trailing" : true,
+  "validthis": true,
+  "node"     : true
+}

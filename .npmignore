@@ -1,0 +1,9 @@
+.git
+.DS_STORE
+.editorconfig
+.gitignore
+.jshintrc
+.travis.yml
+gretro.min.js
+node_modules/
+coverage/

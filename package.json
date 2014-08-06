@@ -1,0 +1,23 @@
+{
+  "name": "gretro",
+  "description": "Gretro is a library for vintage computer graphics",
+  "version": "0.0.1",
+  "author": "Nao Yonamine <mohayonao@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/mohayonao/gretro.git"
+  },
+  "main": "./gretro",
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "gulp": "^3.8.7",
+    "gulp-istanbul": "^0.2.1",
+    "gulp-jshint": "^1.8.4",
+    "gulp-mocha": "^0.5.2",
+    "gulp-uglify": "^0.3.1",
+    "jshint-stylish": "^0.4.0",
+    "png": "^3.0.3",
+    "underscore": "^1.6.0"
+  }
+}
