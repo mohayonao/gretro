@@ -672,7 +672,7 @@
   }
 
   var exports = {
-    version: "0.0.1",
+    version: "0.1.1",
     Canvas : function(width, height) {
       width  = int(defaults(width , 640));
       height = int(defaults(height, 400));
