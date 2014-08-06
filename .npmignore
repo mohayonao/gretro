@@ -4,6 +4,6 @@
 .gitignore
 .jshintrc
 .travis.yml
-gretro.min.js
 node_modules/
 coverage/
+build/

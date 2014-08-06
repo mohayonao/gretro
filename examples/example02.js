@@ -7,8 +7,7 @@ var canvas = new gretro.Canvas(320, 50);
 
 for (var i = 0; i < 16; ++i) {
   var index = (" " + i).substr(-2);
-  var color = new gretro.Color(8, 15, i);
-  canvas.rect(i * 20, 0, 20, 40, color, true);
+  canvas.rect(i * 20, 0, 20, 40, [ 8, 15, i ], true);
   canvas.text(index, (i * 20) + 4, 42, 15);
 }
 

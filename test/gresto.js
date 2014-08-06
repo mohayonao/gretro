@@ -19,7 +19,7 @@ describe("gretro", function() {
       it("should return new canvas with the specified size", function() {
         var canvas = new gretro.Canvas(8, 8);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           __,__,__,__,__,__,__,__,
           __,__,__,__,__,__,__,__,
           __,__,__,__,__,__,__,__,
@@ -48,9 +48,9 @@ describe("gretro", function() {
     describe("#getColor / #setColor", function() {
       it("should get/set RGB data hex color", function() {
         var canvas = new gretro.Canvas(8, 8);
-        var result = canvas.setColor(1, 0xefefef);
+        var result = canvas.setColor(1, 0x2ecc71);
 
-        expect(canvas.getColor(1)).to.equal(0xefefef);
+        expect(canvas.getColor(1)).to.equal(0x22cc77);
       });
     });
     describe("#getTile / #setTile", function() {
@@ -72,7 +72,7 @@ describe("gretro", function() {
         var canvas = new gretro.Canvas(8, 8);
         var result = canvas.clear($$);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           $$,$$,$$,$$,$$,$$,$$,$$,
           $$,$$,$$,$$,$$,$$,$$,$$,
           $$,$$,$$,$$,$$,$$,$$,$$,
@@ -93,7 +93,7 @@ describe("gretro", function() {
 
         canvas.dot(5, 6, $$);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           __,__,__,__,__,__,__,__,
           __,__,__,__,__,__,__,__,
           __,__,$$,__,__,__,__,__,
@@ -116,7 +116,7 @@ describe("gretro", function() {
         canvas.line(7, 4, 7, 8, $$);
         canvas.line(4, 7, 8, 7, $$);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
             $$,$$,__,__,__,__,__,__,
             $$,__,$$,$$,__,__,__,__,
             __,$$,__,__,$$,$$,$$,__,
@@ -137,7 +137,7 @@ describe("gretro", function() {
 
         canvas.rect(6, 6, -3, -3, $$);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
             __,__,__,__,__,__,__,__,
             __,$$,$$,$$,__,__,__,__,
             __,$$,__,$$,__,__,__,__,
@@ -154,7 +154,7 @@ describe("gretro", function() {
         var canvas = new gretro.Canvas(8, 8);
         var result = canvas.rect(1, 1, 6, 6, $$, true);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           __,__,__,__,__,__,__,__,
           __,$$,$$,$$,$$,$$,$$,__,
           __,$$,$$,$$,$$,$$,$$,__,
@@ -173,7 +173,7 @@ describe("gretro", function() {
         var canvas = new gretro.Canvas(8, 8);
         var result = canvas.circle(3, 3, 3, $$);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           __,__,$$,$$,$$,__,__,__,
           __,$$,__,__,__,$$,__,__,
           $$,__,__,__,__,__,$$,__,
@@ -190,7 +190,7 @@ describe("gretro", function() {
         var canvas = new gretro.Canvas(8, 8);
         var result = canvas.circle(3, 3, 3, $$, true);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           __,__,$$,$$,$$,__,__,__,
           __,$$,$$,$$,$$,$$,__,__,
           $$,$$,$$,$$,$$,$$,$$,__,
@@ -209,7 +209,7 @@ describe("gretro", function() {
         var canvas = new gretro.Canvas(8, 8);
         var result = canvas.ellipse(3, 3, 3, 2, $$);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           __,__,__,__,__,__,__,__,
           __,$$,$$,$$,$$,$$,__,__,
           $$,__,__,__,__,__,$$,__,
@@ -226,7 +226,7 @@ describe("gretro", function() {
         var canvas = new gretro.Canvas(8, 8);
         var result = canvas.ellipse(3, 3, 3, 2, $$, true);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           __,__,__,__,__,__,__,__,
           __,$$,$$,$$,$$,$$,__,__,
           $$,$$,$$,$$,$$,$$,$$,__,
@@ -243,9 +243,9 @@ describe("gretro", function() {
     describe("#text", function() {
       it("should draw a text with specified color", function() {
         var canvas = new gretro.Canvas(8, 8);
-        var result = canvas.text("A ", 0, 0, $$);
+        var result = canvas.text("A", 0, 0, $$);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           __,$$,$$,$$,__,__,__,__,
           $$,__,__,__,$$,__,__,__,
           $$,__,__,__,$$,__,__,__,
@@ -253,6 +253,23 @@ describe("gretro", function() {
           $$,$$,$$,$$,$$,__,__,__,
           $$,__,__,__,$$,__,__,__,
           $$,__,__,__,$$,__,__,__,
+          __,__,__,__,__,__,__,__,
+        ]));
+
+        expect(result, "should return self").to.equal(canvas);
+      });
+      it("should skip if not ascii char", function() {
+        var canvas = new gretro.Canvas(8, 8);
+        var result = canvas.text("日本語", 0, 0, $$);
+
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
+          __,__,__,__,__,__,__,__,
+          __,__,__,__,__,__,__,__,
+          __,__,__,__,__,__,__,__,
+          __,__,__,__,__,__,__,__,
+          __,__,__,__,__,__,__,__,
+          __,__,__,__,__,__,__,__,
+          __,__,__,__,__,__,__,__,
           __,__,__,__,__,__,__,__,
         ]));
 
@@ -270,7 +287,7 @@ describe("gretro", function() {
 
         var result = canvas.paint(3, 3, ll);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           ll,ll,ll,$$,__,__,__,__,
           ll,ll,ll,$$,__,__,__,__,
           ll,ll,ll,$$,$$,$$,$$,$$,
@@ -294,7 +311,7 @@ describe("gretro", function() {
 
         var result = canvas.paint(3, 3, $$, true);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           $$,$$,$$,$$,__,__,__,__,
           $$,$$,$$,$$,__,__,__,__,
           $$,$$,$$,$$,$$,$$,$$,$$,
@@ -318,7 +335,7 @@ describe("gretro", function() {
         plotter.lineToRel(5, 0);
         plotter.moveToRel(1, 1);
 
-        expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+        expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           __,__,__,__,__,__,__,__,
           __,$$,$$,$$,$$,$$,__,__,
           __,__,__,__,__,__,__,__,
@@ -331,6 +348,19 @@ describe("gretro", function() {
 
         expect(plotter.getX()).to.equal(7);
         expect(plotter.getY()).to.equal(6);
+      });
+    });
+    describe("#clone", function() {
+      it("should return clone", function() {
+        var canvas = new gretro.Canvas(8, 8);
+
+        canvas.setColor(2, 0x123456);
+        canvas.circle(4, 4, 3, 2);
+
+        var cloned = canvas.clone();
+
+        expect(canvas).to.not.equal(cloned);
+        expect(cloned.toRGB()).to.eql(canvas.toRGB());
       });
     });
     describe("#toRGB", function() {
@@ -362,9 +392,9 @@ describe("gretro", function() {
     it("color with tile pattern", function() {
       var canvas = new gretro.Canvas(8, 8);
 
-      canvas.clear(new gretro.Color(__, $$, 8));
+      canvas.clear([　$$, __, 8 ]);
 
-      expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+      expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
         __,$$,__,$$,__,$$,__,$$,
         $$,__,$$,__,$$,__,$$,__,
         __,$$,__,$$,__,$$,__,$$,
@@ -375,13 +405,21 @@ describe("gretro", function() {
         $$,__,$$,__,$$,__,$$,__,
       ]));
     });
-    it("should deal with mono color if got 0 for tileIndex", function() {
-      var color = new gretro.Color($$, __, 0);
-      expect(color.valueOf()).to.equal($$);
-    });
-    it("should deal with mono color if got same color", function() {
-      var color = new gretro.Color($$, $$, 8);
-      expect(color.valueOf()).to.equal($$);
+    it("color with tile pattern", function() {
+      var canvas = new gretro.Canvas(8, 8);
+
+      canvas.clear([　__, __, 0 ]);
+
+      expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
+        __,__,__,__,__,__,__,__,
+        __,__,__,__,__,__,__,__,
+        __,__,__,__,__,__,__,__,
+        __,__,__,__,__,__,__,__,
+        __,__,__,__,__,__,__,__,
+        __,__,__,__,__,__,__,__,
+        __,__,__,__,__,__,__,__,
+        __,__,__,__,__,__,__,__,
+      ]));
     });
   });
   describe("error case", function() {
@@ -391,7 +429,7 @@ describe("gretro", function() {
       canvas.clear($$);
       canvas.clear("blue");
 
-      expect(canvas.toIndexColor()).to.eql(new Uint8Array([
+      expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
         __,__,__,__,__,__,__,__,
         __,__,__,__,__,__,__,__,
         __,__,__,__,__,__,__,__,

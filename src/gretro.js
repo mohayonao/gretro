@@ -157,9 +157,10 @@
     var palette = self.colorPalette;
 
     index *= 3;
-    palette[index    ] = (rgb >>  0) & 0xff;
-    palette[index + 1] = (rgb >>  8) & 0xff;
-    palette[index + 2] = (rgb >> 16) & 0xff;
+
+    palette[index    ] = ((rgb >>  4) & 0x0f) * 0x11;
+    palette[index + 1] = ((rgb >> 12) & 0x0f) * 0x11;
+    palette[index + 2] = ((rgb >> 20) & 0x0f) * 0x11;
   }
 
   function getTile(self, index) {
@@ -470,26 +471,16 @@
     } while (q.length);
   }
 
-  function calcColor(self, color, index) {
+  function selectColorIndex(self, color, index) {
     if (color & 0x0f00) {
       var tilePattern = self.tilePalette[color >> 8];
       var x = int(index % self.width) % 4;
       var y = int(index / self.width) % 4 * 4;
       var which = tilePattern & 1 << (x + y);
 
-      return which ? (color & 0x0f) : (color & 0xf0) >> 4;
+      return which ? (color & 0xf0) >> 4 : (color & 0x0f);
     }
     return color & 0x0f;
-  }
-
-  function toColor(color) {
-    if (color instanceof Color) {
-      return color.valueOf();
-    }
-    if (typeof color === "number") {
-      return nib(color);
-    }
-    return 0;
   }
 
   function toRGB(self) {
@@ -499,7 +490,7 @@
 
     var k = 0;
     for (var i = 0, imax = data.length; i < imax; i++) {
-      var paletteIndex = calcColor(self, data[i], i) * 3;
+      var paletteIndex = selectColorIndex(self, data[i], i) * 3;
       result[k++] = colorPalette[paletteIndex    ];
       result[k++] = colorPalette[paletteIndex + 1];
       result[k++] = colorPalette[paletteIndex + 2];
@@ -515,7 +506,7 @@
 
     var k = 0;
     for (var i = 0, imax = data.length; i < imax; i++) {
-      var paletteIndex = calcColor(self, data[i], i) * 3;
+      var paletteIndex = selectColorIndex(self, data[i], i) * 3;
       result[k++] = colorPalette[paletteIndex    ];
       result[k++] = colorPalette[paletteIndex + 1];
       result[k++] = colorPalette[paletteIndex + 2];
@@ -525,29 +516,58 @@
     return result;
   }
 
-  function toIndexColor(self) {
+  function toIndexedColor(self) {
     var result = new Uint8Array(self.width * self.height);
     var data = self.data;
 
     for (var i = 0, imax = data.length; i < imax; i++) {
-      var paletteIndex = calcColor(self, data[i], i);
+      var paletteIndex = selectColorIndex(self, data[i], i);
       result[i] = paletteIndex;
     }
 
     return result;
   }
 
-  function Canvas(width, height) {
+  function colorize(color) {
+    if (typeof color === "number") {
+      return nib(color);
+    }
+    if (Array.isArray(color)) {
+      return fromTileItems(color);
+    }
+    return 0;
+  }
+
+  function fromTileItems(items) {
+    var color1 = nib(items[0]);
+    var color2 = nib(items[1]);
+    var tileIndex = nib(items[2]);
+
+    if (color1 === color2 || tileIndex === 0) {
+      return color1;
+    }
+
+    return color1 | (color2 << 4) | (tileIndex << 8);
+  }
+
+  function Canvas(width, height, src) {
     width  = int(defaults(width , 640));
     height = int(defaults(height, 400));
 
     var self = {
-      data  : new Uint16Array(width * height),
       width : width,
       height: height,
-      colorPalette: new Uint8Array(defaultColorPalette),
-      tilePalette : new Uint16Array(defaultTilePalette)
     };
+
+    if (src) {
+      self.data = new Uint16Array(src.data);
+      self.colorPalette = new Uint8Array(src.colorPalette);
+      self.tilePalette  = new Uint16Array(src.tilePalette);
+    } else {
+      self.data = new Uint16Array(width * height);
+      self.colorPalette = new Uint8Array(defaultColorPalette);
+      self.tilePalette  = new Uint16Array(defaultTilePalette);
+    }
 
     this.getWidth = function() {
       return width;
@@ -570,39 +590,42 @@
       return this;
     };
     this.clear = function(color) {
-      clear(self, toColor(color));
+      clear(self, colorize(color));
       return this;
     };
     this.dot = function(x, y, color) {
-      dot(self, int(x), int(y), toColor(color));
+      dot(self, int(x), int(y), colorize(color));
       return this;
     };
     this.line = function(x1, y1, x2, y2, color) {
-      line(self, int(x1), int(y1), int(x2), int(y2), toColor(color));
+      line(self, int(x1), int(y1), int(x2), int(y2), colorize(color));
       return this;
     };
     this.rect = function(x, y, width, height, color, filled) {
-      rect(self, int(x), int(y), int(width), int(height), toColor(color), !!filled);
+      rect(self, int(x), int(y), int(width), int(height), colorize(color), !!filled);
       return this;
     };
     this.circle = function(cx, cy, r, color, filled) {
-      circle(self, int(cx), int(cy), int(r), toColor(color), !!filled);
+      circle(self, int(cx), int(cy), int(r), colorize(color), !!filled);
       return this;
     };
     this.ellipse = function(cx, cy, rx, ry, color, filled) {
-      ellipse(self, int(cx), int(cy), int(rx), int(ry), toColor(color), !!filled);
+      ellipse(self, int(cx), int(cy), int(rx), int(ry), colorize(color), !!filled);
       return this;
     };
     this.text = function(str, x, y, color) {
-      text(self, String(str), int(x), int(y), toColor(color));
+      text(self, String(str), int(x), int(y), colorize(color));
       return this;
     };
     this.plotter = function(x, y, color) {
-      return new Plotter(this, int(x), int(y), toColor(color));
+      return new Plotter(this, int(x), int(y), colorize(color));
     };
     this.paint = function(x, y, color, filled) {
-      paint(self, int(x), int(y), toColor(color), !!filled);
+      paint(self, int(x), int(y), colorize(color), !!filled);
       return this;
+    };
+    this.clone = function() {
+      return new Canvas(width, height, self);
     };
     this.toRGB = function() {
       return toRGB(self);
@@ -610,74 +633,51 @@
     this.toRGBA = function(alpha) {
       return toRGBA(self, int(defaults(alpha, 255)));
     };
-    this.toIndexColor = function() {
-      return toIndexColor(self);
+    this.toIndexedColor = function() {
+      return toIndexedColor(self);
     };
   }
 
-  function Plotter(canvas, x, y , color) {
-    var self = {
-      canvas: canvas,
-      x     : x,
-      y     : y,
-      color : color
-    };
-
+  function Plotter(_canvas, _x, _y , _color) {
     this.getX = function() {
-      return self.x;
+      return _x;
     };
     this.getY = function() {
-      return self.y;
+      return _y;
     };
     this.moveTo = function(x, y) {
-      self.x = int(x);
-      self.y = int(y);
+      _x = int(x);
+      _y = int(y);
 
       return this;
     };
     this.lineTo = function(x, y) {
-      var x1 = self.x;
+      var x1 = _x;
       var x2 = int(x);
-      var y1 = self.y;
+      var y1 = _y;
       var y2 = int(y);
 
-      self.canvas.line(x1, y1, x2, y2, self.color);
-      self.x = x2;
-      self.y = y2;
+      _canvas.line(x1, y1, x2, y2, _color);
+      _x = x2;
+      _y = y2;
 
       return this;
     };
     this.moveToRel = function(x, y) {
-      return this.moveTo(self.x + int(x), self.y + int(y));
+      return this.moveTo(_x + int(x), _y + int(y));
     };
     this.lineToRel = function(x, y) {
-      return this.lineTo(self.x + int(x), self.y + int(y));
-    };
-  }
-
-  function Color(color1, color2, tileIndex) {
-    color1 = nib(color1);
-    color2 = nib(color2);
-    tileIndex = nib(tileIndex);
-
-    if (color1 === color2) {
-      tileIndex = 0;
-    }
-    if (tileIndex === 0) {
-      color2 = 0;
-    }
-
-    var color = (color1) | (color2 << 4) | (tileIndex << 8);
-
-    this.valueOf = function() {
-      return color;
+      return this.lineTo(_x + int(x), _y + int(y));
     };
   }
 
   var exports = {
     version: "0.0.1",
-    Canvas : Canvas,
-    Color  : Color
+    Canvas : function(width, height) {
+      width  = int(defaults(width , 640));
+      height = int(defaults(height, 400));
+      return new Canvas(width, height);
+    }
   };
 
   // istanbul ignore else
