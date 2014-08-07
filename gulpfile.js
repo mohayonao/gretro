@@ -1,11 +1,12 @@
 "use strict";
 
 var gulp = require("gulp");
-var mocha = require("gulp-mocha");
-var istanbul = require("gulp-istanbul");
-var jshint = require("gulp-jshint");
-var uglify = require("gulp-uglify");
-var rename = require("gulp-rename");
+var jshint    = require("gulp-jshint");
+var mocha     = require("gulp-mocha");
+var istanbul  = require("gulp-istanbul");
+var browerify = require("gulp-browserify");
+var uglify    = require("gulp-uglify");
+var rename    = require("gulp-rename");
 
 gulp.task("lint", function() {
   return gulp.src([ "src/*.js", "examples/*.js" ])
@@ -15,7 +16,7 @@ gulp.task("lint", function() {
 });
 
 gulp.task("test", function(cb) {
-  gulp.src("src/gretro.js")
+  gulp.src("src/*.js")
     .pipe(istanbul())
     .on("finish", function() {
       return gulp.src([ "test/*.js" ])
@@ -26,13 +27,17 @@ gulp.task("test", function(cb) {
 });
 
 gulp.task("build", function() {
-  return gulp.src("src/gretro.js")
+  return gulp.src("index.js")
     /* gretro.js */
+    .pipe(browerify({
+      standalone: "gretro"
+    }))
+    .pipe(rename("gretro.js"))
     .pipe(gulp.dest("build"))
-    /* gretro.min. js */
+    /* gretro.min.js */
     .pipe(uglify())
     .pipe(rename("gretro.min.js"))
-    .pipe(gulp.dest("./build"));
+    .pipe(gulp.dest("build"));
 });
 
 gulp.task("travis", [ "lint", "test" ]);
