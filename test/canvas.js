@@ -65,6 +65,18 @@ describe("Canvas", function() {
     });
   });
 
+  describe("#getColorIndex", function() {
+    it("should return color index", function() {
+      var canvas = new gretro.Canvas(8, 8);
+
+      canvas.paint(0, 0, [ 0, 4, 8 ]);
+
+      expect(canvas.getColorIndex( 0,  0)).to.equal( 4);
+      expect(canvas.getColorIndex( 1,  0)).to.equal( 0);
+      expect(canvas.getColorIndex(-1, -1)).to.equal(-1);
+    });
+  });
+
   describe("#clone", function() {
     it("should return a clone", function() {
       var canvas = new gretro.Canvas(8, 8);

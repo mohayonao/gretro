@@ -17,6 +17,7 @@ var plotter  = require("./plotter");
 var toRGB    = require("./toRGB");
 var toRGBA   = require("./toRGBA");
 var toIndexedColor = require("./toIndexedColor");
+var getColorIndex  = require("./getColorIndex");
 
 var defaultColorPalette = new Uint8Array([
   0x00, 0x00, 0x00, // black
@@ -87,11 +88,23 @@ function createCanvasData(width, height, src) {
     }
   }
 
+  function getColorIndex(x, y, color) {
+    if (color & 0x0f00) {
+      var tile  = data.tilePalette[color >> 8];
+      var mask  = 1 << ((x & 3) + (y & 3) * 4);
+      var which = tile & mask;
+
+      return which ? (color & 0xf0) >> 4 : (color & 0x0f);
+    }
+    return color & 0x0f;
+  }
+
   var data = {
-    width   : width,
-    height  : height,
+    width : width,
+    height: height,
     getPixel: getPixel,
-    putPixel: putPixel
+    putPixel: putPixel,
+    getColorIndex: getColorIndex
   };
 
   if (src) {
@@ -132,6 +145,9 @@ function Canvas(width, height, src) {
   this.setTile = function(index, pattern) {
     setTile(self, index & 15, pattern|0);
     return this;
+  };
+  this.getColorIndex = function(x, y) {
+    return getColorIndex(self, x, y);
   };
   this.clear = function(color) {
     clear(self, colorize(color));
