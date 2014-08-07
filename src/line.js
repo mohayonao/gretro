@@ -1,9 +1,46 @@
 "use strict";
 
-var lineH = require("./lineH");
-var lineV = require("./lineV");
-var lineX = require("./lineX");
-var lineY = require("./lineY");
+var dot = require("./dot");
+
+function lineH(self, x, y, dx, dy, sx, sy, color) {
+  for (var i = 0; i <= dx; x += sx, i++) {
+    dot(self, x, y, color);
+  }
+}
+
+function lineV(self, x, y, dx, dy, sx, sy, color) {
+  for (var i = 0; i <= dy; y += sy, i++) {
+    dot(self, x, y, color);
+  }
+}
+
+function lineX(self, x, y, dx, dy, sx, sy, color) {
+  var e = -dx;
+
+  for (var i = 0; i <= dx; x += sx, i++) {
+    dot(self, x, y, color);
+
+    e += 2 * dy;
+    if (e >= 0)  {
+      y += sy;
+      e -= 2 * dx;
+    }
+  }
+}
+
+function lineY(self, x, y, dx, dy, sx, sy, color) {
+  var e = -dy;
+
+  for (var i = 0; i <= dy; y += sy, i++) {
+    dot(self, x, y, color);
+
+    e += 2 * dx;
+    if (e >= 0) {
+      x += sx;
+      e -= 2 * dy;
+    }
+  }
+}
 
 module.exports = function(self, x1, y1, x2, y2, color) {
   var dx = Math.abs(x1 - x2);

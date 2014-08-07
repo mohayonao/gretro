@@ -14,7 +14,6 @@ var char     = require("./char");
 var text     = require("./text");
 var paint    = require("./paint");
 var plotter  = require("./plotter");
-var colorize = require("./colorize");
 var toRGB    = require("./toRGB");
 var toRGBA   = require("./toRGBA");
 var toIndexedColor = require("./toIndexedColor");
@@ -50,6 +49,28 @@ function defaults(val, defaultVal) {
     return defaultVal;
   }
   return val;
+}
+
+function fromTileItems(items) {
+  var color1 = items[0] & 15;
+  var color2 = items[1] & 15;
+  var tileIndex = items[2] & 15;
+
+  if (color1 === color2 || tileIndex === 0) {
+    return color1;
+  }
+
+  return color1 | (color2 << 4) | (tileIndex << 8);
+}
+
+function colorize(color) {
+  if (typeof color === "number") {
+    return color & 15;
+  }
+  if (Array.isArray(color)) {
+    return fromTileItems(color);
+  }
+  return 0;
 }
 
 function createCanvasData(width, height, src) {

@@ -1,6 +1,6 @@
 "use strict";
 
-var lineH = require("./lineH");
+var line = require("./line");
 
 function process(self, x, y, color, isEdge, scanLine) {
   function scanRight(x, y) {
@@ -29,7 +29,7 @@ function process(self, x, y, color, isEdge, scanLine) {
     var rx = scanRight(x, y);
     var lx = scanLeft(x, y);
 
-    lineH(self, lx, y, rx - rx, 0, 1, 0, color);
+    line(self, lx, y, rx, y, color);
 
     if (y - 1 >= 0) {
       scanLine(lx, rx, y - 1, q);

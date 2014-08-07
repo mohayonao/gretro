@@ -1,7 +1,7 @@
 "use strict";
 
-var dot   = require("./dot");
-var lineH = require("./lineH");
+var dot  = require("./dot");
+var line = require("./line");
 
 function process(self, cx, cy, r, delegate) {
   var x  = r;
@@ -20,10 +20,10 @@ function process(self, cx, cy, r, delegate) {
 
 function fill(self, cx, cy, r, color) {
   process(self, cx, cy, r, function(x, y) {
-    lineH(self, cx - x, cy - y, x * 2, 0, 1, 0, color);
-    lineH(self, cx - x, cy + y, x * 2, 0, 1, 0, color);
-    lineH(self, cx - y, cy + x, y * 2, 0, 1, 0, color);
-    lineH(self, cx - y, cy - x, y * 2, 0, 1, 0, color);
+    line(self, cx - x, cy - y, cx + x, cy - y, color);
+    line(self, cx - x, cy + y, cx + x, cy + y, color);
+    line(self, cx - y, cy - x, cx + y, cy - x, color);
+    line(self, cx - y, cy + x, cx + y, cy + x, color);
   });
 }
 
