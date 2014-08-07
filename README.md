@@ -7,14 +7,14 @@
 
 > **Gretro** is a JavaScript Graphic library for vintage CG.
 
-![splash](http://the.mohayonao.com/gretro/splash.png)
+![splash](http://the.mohayonao.com/gretro/github-contents/splash.png)
 
 ## Install
 
 browser
 
-  - [gretro.js](http://the.mohayonao.com/gretro/gretro.js)
-  - [gretro.min.js](http://the.mohayonao.com/gretro/gretro.min.js)
+  - [gretro.js](http://the.mohayonao.com/gretro/github-contents/gretro.js)
+  - [gretro.min.js](http://the.mohayonao.com/gretro/github-contents/gretro.min.js)
 
 ```html
 <script src="/path/to/gretro.js"></script>
@@ -73,7 +73,7 @@ fs.writeFileSync("./image.png", png_image.toString("binary"), "binary");
 #### Constructor
   - new Canvas(width:int = 640, height:int = 400) : Canvas
 
-#### Instance mthods
+#### Instance methods
 
   - getWidth() : int
   - getHeight() : int
@@ -88,6 +88,7 @@ fs.writeFileSync("./image.png", png_image.toString("binary"), "binary");
   - circle(cx:int, cy:int, r:int, color:[int|array], filled:boolean = false) : Canvas
   - ellipse(cx:int, cy:int, rx:int, ry:int, color:[int|array], filled:boolean = false) : Canvas
   - paint(x:int, y:int, color:[int|array], filled:boolean = false) : Canvas
+  - char(char:int, x:int, y:int, color:[int|array]) : Canvas
   - text(text:string, x:int, y:int, color:[int|array]) : Canvas
   - plotter(x:int, y:int, color:[int|array]) : Plotter
   - clone() : Canvas
@@ -96,6 +97,8 @@ fs.writeFileSync("./image.png", png_image.toString("binary"), "binary");
   - toIndexedColor() : Uint8Array
 
 ### Plotter
+
+#### Instance methods
 
   - getX() : int
   - getY() : int
@@ -106,11 +109,11 @@ fs.writeFileSync("./image.png", png_image.toString("binary"), "binary");
 
 ## Color
 
-16 colors chosen from among the 4096 available.
+You can use 16 colors on a canvas. It is possible to select from 4096 colors.
 
 ### default color palette
 
-![example01](http://the.mohayonao.com/gretro/example01.png)
+![example01](http://the.mohayonao.com/gretro/github-contents/example01.png)
 
 ### customize color
 
@@ -132,13 +135,22 @@ canvas.circle(100, 100, 50, [ color1, color2, tileIndex ]);
 
 ### default tile palette
 
-![example02](http://the.mohayonao.com/gretro/example02.png)
+![example02](http://the.mohayonao.com/gretro/github-contents/example02.png)
 
 ### customize tile
 
 ```javascript
 canvas.setTile(1, 0xf0f0);
 ```
+
+## Contribution
+
+  1. Fork ([https://github.com/mohayonao/gretro/fork](https://github.com/mohayonao/gretro/fork))
+  1. Create a feature branch (`git checkout -b my-new-feature`)
+  1. Commit your changes (`git commit -am 'add some feature'`)
+  1. Run test suite with the `gulp travis` command and confirm that it passes
+  1. Push to the branch (`git push origin my-new-feature`)
+  1. Create new Pull Request
 
 ## License
 
