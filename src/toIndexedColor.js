@@ -9,8 +9,8 @@ module.exports = function(self) {
   var height = self.height;
 
   var i = 0;
-  for (var x = 0; x < width; x++) {
-    for (var y = 0; y < height; y++) {
+  for (var y = 0; y < height; y++) {
+    for (var x = 0; x < width; x++) {
       result[i] = selectColorIndex(self, x, y, data[i++]);
     }
   }
