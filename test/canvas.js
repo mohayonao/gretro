@@ -38,6 +38,21 @@ describe("Canvas", function() {
     });
   });
 
+  describe("#getColorIndex", function() {
+    it("should return color index", function() {
+      var canvas = new gretro.Canvas(4, 4);
+
+      canvas.paint(0, 0, [ 2, 4, 8 ]);
+
+      expect(canvas.getRawData()).to.eql(new Uint16Array([
+        0x0842, 0x0842, 0x0842, 0x0842,
+        0x0842, 0x0842, 0x0842, 0x0842,
+        0x0842, 0x0842, 0x0842, 0x0842,
+        0x0842, 0x0842, 0x0842, 0x0842,
+      ]));
+    });
+  });
+
   describe("#setColor", function() {
     it("should set RGB hex color code", function() {
       var canvas = new gretro.Canvas(1, 1);

@@ -132,6 +132,9 @@ function Canvas(width, height, src) {
   this.getHeight = function() {
     return height;
   };
+  this.getRawData = function() {
+    return self.data;
+  };
   this.getColor = function(index) {
     return getColor(self, index & 15);
   };
