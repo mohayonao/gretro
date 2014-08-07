@@ -9,17 +9,22 @@ var uglify    = require("gulp-uglify");
 var rename    = require("gulp-rename");
 
 gulp.task("lint", function() {
-  return gulp.src([ "src/*.js", "examples/*.js" ])
+  return gulp.src([ "gulpfile.js", "src/*.js", "examples/*.js" ])
     .pipe(jshint(".jshintrc"))
     .pipe(jshint.reporter(require("jshint-stylish")))
     .pipe(jshint.reporter("fail"));
 });
 
-gulp.task("test", function(cb) {
+gulp.task("test", function() {
+  return gulp.src("test/*.js")
+    .pipe(mocha());
+});
+
+gulp.task("cover", function(cb) {
   gulp.src("src/*.js")
     .pipe(istanbul())
     .on("finish", function() {
-      return gulp.src([ "test/*.js" ])
+      return gulp.src("test/*.js")
         .pipe(mocha())
         .pipe(istanbul.writeReports("coverage"))
         .on("end", cb);
@@ -40,5 +45,5 @@ gulp.task("build", function() {
     .pipe(gulp.dest("build"));
 });
 
-gulp.task("travis", [ "lint", "test" ]);
-gulp.task("default", [ "travis" ]);
+gulp.task("travis", [ "lint", "cover" ]);
+gulp.task("default", [ "lint", "cover", "build" ]);
