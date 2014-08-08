@@ -14,7 +14,6 @@ var ellipse  = require("./ellipse");
 var char     = require("./char");
 var text     = require("./text");
 var paint    = require("./paint");
-var plotter  = require("./plotter");
 var toRGB    = require("./toRGB");
 var toRGBA   = require("./toRGBA");
 var toIndexedColor = require("./toIndexedColor");
@@ -197,9 +196,6 @@ function Canvas(width, height, src) {
   this.paint = function(x, y, color) {
     paint(self, x|0, y|0, colorize(color));
     return this;
-  };
-  this.plotter = function(x, y, color) {
-    return plotter(this, x|0, y|0, colorize(color));
   };
   this.clone = function() {
     return new Canvas(width, height, self);
