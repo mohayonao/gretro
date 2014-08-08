@@ -83,9 +83,7 @@ function createCanvasData(width, height, src) {
   }
 
   function putPixel(x, y, color) {
-    if (data.minX <= x && x <= data.maxX && data.minX <= y && y <= data.maxY) {
-      data.data[y * width + x] = color;
-    }
+    data.data[y * width + x] = color;
   }
 
   function getColorIndex(x, y, color) {
