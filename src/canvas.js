@@ -15,6 +15,7 @@ var char     = require("./char");
 var text     = require("./text");
 var paint    = require("./paint");
 var copy     = require("./copy");
+var paste    = require("./paste");
 var toRGB    = require("./toRGB");
 var toRGBA   = require("./toRGBA");
 var toIndexedColor = require("./toIndexedColor");
@@ -208,6 +209,12 @@ function Canvas(width, height, src) {
       colorPalette: new Uint8Array(self.colorPalette),
       tilePalette : new Uint16Array(self.tilePalette)
     });
+  };
+  this.paste = function(canvas, x, y, mask) {
+    if (canvas instanceof Canvas) {
+      paste(self, canvas, x|0, y|0, mask);
+    }
+    return this;
   };
   this.clone = function() {
     return new Canvas(width, height, self);
