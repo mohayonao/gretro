@@ -8,7 +8,7 @@ var oo = 12;
 var __ =  0;
 
 describe("#paint", function() {
-  var canvas = new gretro.Canvas(8, 8);
+  var canvas = null;
 
   beforeEach(function() {
     /*
@@ -42,23 +42,6 @@ describe("#paint", function() {
       $$,$$,$$,$$,$$,__,__,__,
       __,__,__,__,$$,__,__,__,
       __,__,__,__,$$,__,__,__,
-    ]));
-
-    expect(result, "should return self").to.equal(canvas);
-  });
-
-  it("should fill", function() {
-    var result = canvas.paint(3, 3, $$, true);
-
-    expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
-      $$,$$,$$,$$,__,__,__,__,
-      $$,$$,$$,$$,__,__,__,__,
-      $$,$$,$$,$$,$$,$$,$$,$$,
-      $$,$$,$$,$$,$$,$$,$$,$$,
-      $$,$$,$$,$$,$$,$$,$$,$$,
-      $$,$$,$$,$$,$$,$$,$$,$$,
-      __,__,__,__,$$,$$,$$,$$,
-      __,__,__,__,$$,$$,$$,$$,
     ]));
 
     expect(result, "should return self").to.equal(canvas);

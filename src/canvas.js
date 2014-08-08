@@ -194,8 +194,8 @@ function Canvas(width, height, src) {
     text(self, String(str), x|0, y|0, colorize(color));
     return this;
   };
-  this.paint = function(x, y, color, filled) {
-    paint(self, x|0, y|0, colorize(color), !!filled);
+  this.paint = function(x, y, color) {
+    paint(self, x|0, y|0, colorize(color));
     return this;
   };
   this.plotter = function(x, y, color) {

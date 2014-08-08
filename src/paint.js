@@ -42,28 +42,13 @@ function process(self, x, y, color, isEdge, scanLine) {
   } while (q.length);
 }
 
-function fill(self, x, y, color) {
-  var isEdge = function(x, y) {
-    return self.getPixel(x, y) === color;
-  };
-  var scanLine = function(lx, rx, y, q) {
-    while (lx <= rx && lx <= self.maxX) {
-      if (!isEdge(lx, y)) {
-        q.push(lx, y);
-      }
-      lx++;
-    }
-  };
-
-  process(self, x, y, color, isEdge, scanLine);
-}
-
-function drop(self, x, y, color) {
+module.exports = function(self, x, y, color) {
   var targetColor = self.getPixel(x, y);
-  var isEdge = function(x, y) {
+
+  function isEdge(x, y) {
     return self.getPixel(x, y) !== targetColor;
-  };
-  var scanLine = function(lx, rx, y, q) {
+  }
+  function scanLine(lx, rx, y, queue) {
     while (lx <= rx) {
       while (lx <= rx && isEdge(lx, y)) {
         lx++;
@@ -74,17 +59,9 @@ function drop(self, x, y, color) {
       while (lx <= rx && !isEdge(lx, y)) {
         lx++;
       }
-      q.push(lx - 1, y);
+      queue.push(lx - 1, y);
     }
-  };
+  }
 
   process(self, x, y, color, isEdge, scanLine);
-}
-
-module.exports = function(self, x, y, color, filled) {
-  if (filled) {
-    fill(self, x, y, color);
-  } else {
-    drop(self, x, y, color);
-  }
 };
