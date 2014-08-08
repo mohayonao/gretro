@@ -10,7 +10,7 @@ module.exports = function(self) {
   var i = 0, j = 0;
   for (var y = 0; y < height; y++) {
     for (var x = 0; x < width; x++) {
-      var paletteIndex = self.getColorIndex(x, y, data[i++]) * 3;
+      var paletteIndex = data[i++] * 3;
       result[j++] = colorPalette[paletteIndex    ];
       result[j++] = colorPalette[paletteIndex + 1];
       result[j++] = colorPalette[paletteIndex + 2];

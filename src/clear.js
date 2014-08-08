@@ -1,9 +1,12 @@
 "use strict";
 
 module.exports = function(self, color) {
-  var data = self.data;
+  var width  = self.width;
+  var height = self.height;
 
-  for (var i = 0, imax = data.length; i < imax; i++) {
-    data[i] = color;
+  for (var y = 0; y < height; y++) {
+    for (var x = 0; x < width; x++) {
+      self.putPixel(x, y, color);
+    }
   }
 };

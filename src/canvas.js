@@ -52,24 +52,34 @@ function defaults(val, defaultVal) {
   return val;
 }
 
-function fromTileItems(items) {
+function fromTileItems(items, tilePalette) {
   var color1 = items[0] & 15;
   var color2 = items[1] & 15;
   var tileIndex = items[2] & 15;
+  var tile = tilePalette[tileIndex];
 
   if (color1 === color2 || tileIndex === 0) {
     return color1;
   }
 
-  return color1 | (color2 << 4) | (tileIndex << 8);
+  return {
+    valueOf: function(x, y) {
+      return tile & (1 << ((x & 3) + (y & 3) * 4)) ? color2 : color1;
+    }
+  };
 }
 
-function colorize(color) {
+function colorize(color, tilePalette) {
   if (typeof color === "number") {
     return color & 15;
   }
   if (Array.isArray(color)) {
-    return fromTileItems(color);
+    return fromTileItems(color, tilePalette);
+  }
+  if (typeof color === "function") {
+    return {
+      valueOf: color
+    };
   }
   return 0;
 }
@@ -83,18 +93,10 @@ function createCanvasData(width, height, src) {
   }
 
   function putPixel(x, y, color) {
-    data.data[y * width + x] = color;
-  }
-
-  function getColorIndex(x, y, color) {
-    if (color & 0x0f00) {
-      var tile  = data.tilePalette[color >> 8];
-      var mask  = 1 << ((x & 3) + (y & 3) * 4);
-      var which = tile & mask;
-
-      return which ? (color & 0xf0) >> 4 : (color & 0x0f);
+    var colorIndex = color.valueOf(x, y);
+    if (colorIndex !== -1) {
+      data.data[y * width + x] = colorIndex & 15;
     }
-    return color & 0x0f;
   }
 
   var data = {
@@ -106,15 +108,14 @@ function createCanvasData(width, height, src) {
     maxY  : height - 1,
     getPixel: getPixel,
     putPixel: putPixel,
-    getColorIndex: getColorIndex
   };
 
   if (src) {
-    data.data = new Uint16Array(src.data);
+    data.data = new Uint8Array(src.data);
     data.colorPalette = new Uint8Array(src.colorPalette);
     data.tilePalette  = new Uint16Array(src.tilePalette);
   } else {
-    data.data = new Uint16Array(width * height);
+    data.data = new Uint8Array(width * height);
     data.colorPalette = new Uint8Array(defaultColorPalette);
     data.tilePalette  = new Uint16Array(defaultTilePalette);
   }
@@ -127,6 +128,7 @@ function Canvas(width, height, src) {
   height = defaults(height, 400)|0;
 
   var self = createCanvasData(width, height, src);
+  var tilePalette = self.tilePalette;
 
   this.getWidth = function() {
     return width;
@@ -155,46 +157,46 @@ function Canvas(width, height, src) {
     return getColorIndex(self, x, y);
   };
   this.clear = function(color) {
-    clear(self, colorize(color));
+    clear(self, colorize(color, tilePalette));
     return this;
   };
   this.dot = function(x, y, color) {
-    dot(self, x|0, y|0, colorize(color));
+    dot(self, x|0, y|0, colorize(color, tilePalette));
     return this;
   };
   this.line = function(x1, y1, x2, y2, color) {
-    line(self, x1|0, y1|0, x2|0, y2|0, colorize(color));
+    line(self, x1|0, y1|0, x2|0, y2|0, colorize(color, tilePalette));
     return this;
   };
   this.polygon = function(vtx, color, filled) {
     vtx = Array.isArray(vtx) ? vtx.map(function(edge) {
       return [ edge[0]|0, edge[1]|0 ];
     }) : [];
-    polygon(self, vtx, colorize(color), !!filled);
+    polygon(self, vtx, colorize(color, tilePalette), !!filled);
     return this;
   };
   this.rect = function(x, y, width, height, color, filled) {
-    rect(self, x|0, y|0, width|0, height|0, colorize(color), !!filled);
+    rect(self, x|0, y|0, width|0, height|0, colorize(color, tilePalette), !!filled);
     return this;
   };
   this.circle = function(cx, cy, r, color, filled) {
-    circle(self, cx|0, cy|0, r|0, colorize(color), !!filled);
+    circle(self, cx|0, cy|0, r|0, colorize(color, tilePalette), !!filled);
     return this;
   };
   this.ellipse = function(cx, cy, rx, ry, color, filled) {
-    ellipse(self, cx|0, cy|0, rx|0, ry|0, colorize(color), !!filled);
+    ellipse(self, cx|0, cy|0, rx|0, ry|0, colorize(color, tilePalette), !!filled);
     return this;
   };
   this.char = function(ch, x, y, color) {
-    char(self, ch|0, x|0, y|0, colorize(color));
+    char(self, ch|0, x|0, y|0, colorize(color, tilePalette));
     return this;
   };
   this.text = function(str, x, y, color) {
-    text(self, String(str), x|0, y|0, colorize(color));
+    text(self, String(str), x|0, y|0, colorize(color, tilePalette));
     return this;
   };
   this.paint = function(x, y, color) {
-    paint(self, x|0, y|0, colorize(color));
+    paint(self, x|0, y|0, colorize(color, tilePalette));
     return this;
   };
   this.clone = function() {

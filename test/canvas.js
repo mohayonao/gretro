@@ -38,17 +38,17 @@ describe("Canvas", function() {
     });
   });
 
-  describe("#getColorIndex", function() {
-    it("should return color index", function() {
+  describe("#getRawData", function() {
+    it("should return raw data", function() {
       var canvas = new gretro.Canvas(4, 4);
 
       canvas.paint(0, 0, [ 2, 4, 8 ]);
 
-      expect(canvas.getRawData()).to.eql(new Uint16Array([
-        0x0842, 0x0842, 0x0842, 0x0842,
-        0x0842, 0x0842, 0x0842, 0x0842,
-        0x0842, 0x0842, 0x0842, 0x0842,
-        0x0842, 0x0842, 0x0842, 0x0842,
+      expect(canvas.getRawData()).to.eql(new Uint8Array([
+        4, 2, 4, 2,
+        2, 4, 2, 4,
+        4, 2, 4, 2,
+        2, 4, 2, 4,
       ]));
     });
   });
@@ -103,26 +103,6 @@ describe("Canvas", function() {
 
       expect(canvas).to.not.equal(cloned);
       expect(cloned.toRGB()).to.eql(canvas.toRGB());
-    });
-  });
-
-  describe("error case", function() {
-    it("should replace 0 if got an invalid argument", function() {
-      var canvas = new gretro.Canvas(8, 8);
-
-      canvas.clear($$);
-      canvas.clear("blue");
-
-      expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-      ]));
     });
   });
 
