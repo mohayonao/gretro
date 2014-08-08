@@ -76,14 +76,14 @@ function colorize(color) {
 
 function createCanvasData(width, height, src) {
   function getPixel(x, y) {
-    if (0 <= x && x < width && 0 <= y && y < height) {
+    if (data.minX <= x && x <= data.maxX && data.minX <= y && y <= data.maxY) {
       return data.data[y * width + x];
     }
     return -1;
   }
 
   function putPixel(x, y, color) {
-    if (0 <= x && x < width && 0 <= y && y < height) {
+    if (data.minX <= x && x <= data.maxX && data.minX <= y && y <= data.maxY) {
       data.data[y * width + x] = color;
     }
   }
@@ -102,6 +102,10 @@ function createCanvasData(width, height, src) {
   var data = {
     width : width,
     height: height,
+    minX  : 0,
+    minY  : 0,
+    maxX  : width  - 1,
+    maxY  : height - 1,
     getPixel: getPixel,
     putPixel: putPixel,
     getColorIndex: getColorIndex

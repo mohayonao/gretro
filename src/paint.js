@@ -4,7 +4,7 @@ var line = require("./line");
 
 function process(self, x, y, color, isEdge, scanLine) {
   function scanRight(x, y) {
-    while (x < self.width && !isEdge(x + 1, y)) {
+    while (x <= self.maxX && !isEdge(x + 1, y)) {
       x++;
     }
     return x;
@@ -47,7 +47,7 @@ function fill(self, x, y, color) {
     return self.getPixel(x, y) === color;
   };
   var scanLine = function(lx, rx, y, q) {
-    while (lx <= rx && lx < self.width) {
+    while (lx <= rx && lx <= self.maxX) {
       if (!isEdge(lx, y)) {
         q.push(lx, y);
       }
