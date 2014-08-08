@@ -7,6 +7,7 @@ var setTile  = require("./setTile");
 var clear    = require("./clear");
 var dot      = require("./dot");
 var line     = require("./line");
+var polygon  = require("./polygon");
 var rect     = require("./rect");
 var circle   = require("./circle");
 var ellipse  = require("./ellipse");
@@ -164,6 +165,13 @@ function Canvas(width, height, src) {
   };
   this.line = function(x1, y1, x2, y2, color) {
     line(self, x1|0, y1|0, x2|0, y2|0, colorize(color));
+    return this;
+  };
+  this.polygon = function(vtx, color, filled) {
+    vtx = Array.isArray(vtx) ? vtx.map(function(edge) {
+      return [ edge[0]|0, edge[1]|0 ];
+    }) : [];
+    polygon(self, vtx, colorize(color), !!filled);
     return this;
   };
   this.rect = function(x, y, width, height, color, filled) {
