@@ -14,6 +14,7 @@ var ellipse  = require("./ellipse");
 var char     = require("./char");
 var text     = require("./text");
 var paint    = require("./paint");
+var copy     = require("./copy");
 var toRGB    = require("./toRGB");
 var toRGBA   = require("./toRGBA");
 var toIndexedColor = require("./toIndexedColor");
@@ -198,6 +199,15 @@ function Canvas(width, height, src) {
   this.paint = function(x, y, color) {
     paint(self, x|0, y|0, colorize(color, tilePalette));
     return this;
+  };
+  this.copy = function(x1, y1, x2, y2) {
+    var params = copy(self, x1|0, y1|0, x2|0, y2|0);
+
+    return new Canvas(params[0], params[1], {
+      data: params[2],
+      colorPalette: new Uint8Array(self.colorPalette),
+      tilePalette : new Uint16Array(self.tilePalette)
+    });
   };
   this.clone = function() {
     return new Canvas(width, height, self);
