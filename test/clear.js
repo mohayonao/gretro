@@ -5,7 +5,7 @@ var gretro = require("../");
 var $$ = 15;
 var __ =  0;
 
-describe("#clear", function() {
+describe("Canvas#clear", function() {
   var canvas = null;
 
   beforeEach(function() {

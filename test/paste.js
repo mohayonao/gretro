@@ -5,7 +5,7 @@ var gretro = require("../");
 var $$ = 15;
 var __ =  0;
 
-describe("#paste", function() {
+describe("Canvas#paste", function() {
   var canvas = null;
   var src    = null;
 
@@ -177,18 +177,80 @@ describe("#paste", function() {
 
   describe("error case", function() {
     it("invalid argument", function() {
-      canvas.paste({ this: "is not canvas" }, -4, 4, -1);
+      var saved = new Uint8Array(canvas.getRawData());
+      var src = new gretro.CanvasRGB(8, 8);
 
-      expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-      ]));
+      src.stroke($$).noFill().circle(3, 3, 3);
+
+      canvas.paste(src, -4, 4, -1);
+
+      expect(canvas.getRawData()).to.eql(saved);
+    });
+  });
+
+});
+
+describe("CanvasRGB#paste", function() {
+  var canvas = null;
+
+  beforeEach(function() {
+    canvas = new gretro.CanvasRGB(8, 8);
+  });
+
+  it("should be able to paste the specified canvas", function() {
+    var src = new gretro.CanvasRGB(8, 8);
+
+    src.stroke($$).noFill().circle(3, 3, 3);
+    var result = canvas.paste(src, 0, 0, -1);
+
+    expect(canvas.toRGB()).to.eql(src.toRGB());
+
+    expect(result, "should return self").to.equal(canvas);
+  });
+
+  describe("error case", function() {
+    it("invalid argument", function() {
+      var saved = new Uint8Array(canvas.getRawData());
+      var src = new gretro.Canvas(8, 8);
+
+      src.stroke($$).noFill().circle(3, 3, 3);
+
+      canvas.paste(src, -4, 4, -1);
+
+      expect(canvas.getRawData()).to.eql(saved);
+    });
+  });
+
+});
+
+describe("CanvasRGBA#paste", function() {
+  var canvas = null;
+
+  beforeEach(function() {
+    canvas = new gretro.CanvasRGBA(8, 8);
+  });
+
+  it("should be able to paste the specified canvas", function() {
+    var src = new gretro.CanvasRGBA(8, 8);
+
+    src.stroke($$).noFill().circle(3, 3, 3);
+    var result = canvas.paste(src, 0, 0, -1);
+
+    expect(canvas.toRGBA()).to.eql(src.toRGBA());
+
+    expect(result, "should return self").to.equal(canvas);
+  });
+
+  describe("error case", function() {
+    it("invalid argument", function() {
+      var saved = new Uint8Array(canvas.getRawData());
+      var src = new gretro.Canvas(8, 8);
+
+      src.stroke($$).noFill().circle(3, 3, 3);
+
+      canvas.paste(src, -4, 4, -1);
+
+      expect(canvas.getRawData()).to.eql(saved);
     });
   });
 

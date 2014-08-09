@@ -26,24 +26,25 @@ var defaultTilePalette = new Uint16Array([
   0xafaf, 0xafbf, 0xefbf, 0xefff,
 ]);
 
-module.exports = function(width, height, src) {
+module.exports = function(width, height, pixelSize, buffer) {
   var data = {
     width : width,
     height: height,
-    minX  : 0,
-    minY  : 0,
-    maxX  : width  - 1,
-    maxY  : height - 1,
+    minX: 0,
+    minY: 0,
+    maxX: width  - 1,
+    maxY: height - 1,
     strokeColor:  0,
     fillColor  : -1,
+    pixelSize  : pixelSize,
     colorPalette: new Uint8Array(defaultColorPalette),
     tilePalette : new Uint16Array(defaultTilePalette),
   };
 
-  if (src) {
-    data.data = src;
+  if (buffer instanceof Uint8Array) {
+    data.data = buffer;
   } else {
-    data.data = new Uint8Array(width * height);
+    data.data = new Uint8Array(width * height * pixelSize);
   }
 
   return data;

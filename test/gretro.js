@@ -21,4 +21,16 @@ describe("gretro", function() {
     });
   });
 
+  describe("CanvasRGB", function() {
+    it("should be a function", function() {
+      expect(gretro.CanvasRGB).to.be.a("function");
+    });
+  });
+
+  describe("CanvasRGBA", function() {
+    it("should be a function", function() {
+      expect(gretro.CanvasRGBA).to.be.a("function");
+    });
+  });
+
 });

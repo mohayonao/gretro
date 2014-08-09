@@ -9,4 +9,8 @@ module.exports = function(gr) {
   gr.Canvas.addMethod("toIndexedColor", function() {
     return new Uint8Array(this.$.data);
   });
+
+  gr.CanvasRGB.addMethod("toIndexedColor", function() {
+    throw new Error("CanvasRGB is not supported #toIndexedColor");
+  });
 };

@@ -12,10 +12,14 @@ module.exports = function(gr, _) {
     x = x|0;
     y = y|0;
 
-    if (_.inRange(x, 0, this.$.width - 1) && _.inRange(y, 0, this.$.height - 1)) {
+    if (_.inCanvas(this, x, y)) {
       return this.$.data[y * this.$.width + x];
     }
 
     return -1;
+  });
+
+  gr.CanvasRGB.addMethod("getColorIndex", function() {
+    throw new Error("CanvasRGB is not supported #getColorIndex");
   });
 };

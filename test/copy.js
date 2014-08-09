@@ -5,7 +5,7 @@ var gretro = require("../");
 var $$ = 15;
 var __ =  0;
 
-describe("#copy", function() {
+describe("Canvas#copy", function() {
   var canvas = null;
 
   beforeEach(function() {

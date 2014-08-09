@@ -46,7 +46,7 @@ module.exports = function(gr) {
     var scanY  = (y1 <= y2) ?
       scanFromTop(x1, y1, $.width) : scanFromBottom(x1, y1, $.width);
     var scanX  = (x1 <= x2) ?
-      scanToRight($.data, width) : scanToLeft($.data, width);
+      scanToRight($.data, width, $.pixelSize) : scanToLeft($.data, width, $.pixelSize);
 
     return perform($, scanY, scanX, width, height);
   }
@@ -63,18 +63,20 @@ module.exports = function(gr) {
     };
   }
 
-  function scanToRight(data, width) {
+  function scanToRight(data, width, pixelSize) {
     return function(index) {
-      return data.subarray(index, index + width);
+      return data.subarray(index * pixelSize, (index + width) * pixelSize);
     };
   }
 
-  function scanToLeft(data, width) {
+  function scanToLeft(data, width, pixelSize) {
     return function(index) {
-      var result = new Uint8Array(width);
+      var result = new Uint8Array(width * pixelSize);
 
       for (var i = 0; i < width; i++) {
-        result[i] = data[index - i];
+        for (var j = 0; j < pixelSize; j++) {
+          result[i * pixelSize + j] = data[(index - i) * pixelSize + j];
+        }
       }
 
       return result;

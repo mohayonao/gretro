@@ -7,7 +7,7 @@ var ll = 11;
 var oo = 12;
 var __ =  0;
 
-describe("#paint", function() {
+describe("Canvas#paint", function() {
   var canvas = null;
 
   beforeEach(function() {
@@ -50,6 +50,23 @@ describe("#paint", function() {
     expect(result, "should return self").to.equal(canvas);
   });
 
+  it("should be able to fill in an empty canvas", function() {
+    var canvas = new gretro.Canvas(8, 8);
+
+    canvas.fill(0).clear().fill([ __, $$, 8 ]).paint();
+
+    expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
+      $$,__,$$,__,$$,__,$$,__,
+      __,$$,__,$$,__,$$,__,$$,
+      $$,__,$$,__,$$,__,$$,__,
+      __,$$,__,$$,__,$$,__,$$,
+      $$,__,$$,__,$$,__,$$,__,
+      __,$$,__,$$,__,$$,__,$$,
+      $$,__,$$,__,$$,__,$$,__,
+      __,$$,__,$$,__,$$,__,$$,
+    ]));
+  });
+
   it("when background color and fill color are same", function() {
     var result = canvas.fill(__).paint(3, 3);
 
@@ -82,6 +99,30 @@ describe("#paint", function() {
     ]));
 
     expect(result, "should return self").to.equal(canvas);
+  });
+
+});
+
+describe("CanvasRGB#paint", function() {
+
+  it("should throw error", function() {
+    var canvas = new gretro.CanvasRGB(1, 4);
+
+    expect(function() {
+      canvas.paint(3, 3);
+    }).throw(Error)
+  });
+
+});
+
+describe("CanvasRGBA#paint", function() {
+
+  it("should throw error", function() {
+    var canvas = new gretro.CanvasRGBA(1, 4);
+
+    expect(function() {
+      canvas.paint(3, 3);
+    }).throw(Error)
   });
 
 });

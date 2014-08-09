@@ -2,11 +2,19 @@
 
 exports.addMethod = require("./addMethod");
 
+exports.extend = require("./extend");
+
 exports.inRange = require("./inRange");
 
 exports.defaults = require("./defaults");
 
+exports.rgb2num = require("./rgb2num");
+
 exports.colorize = require("./colorize");
+
+exports.inCanvas = require("./inCanvas");
+
+exports.inClip = require("./inClip");
 
 exports.putPixel = require("./putPixel");
 

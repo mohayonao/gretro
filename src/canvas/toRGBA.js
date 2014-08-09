@@ -10,7 +10,8 @@ module.exports = function(gr, _) {
   gr.Canvas.addMethod("toRGBA", function(alpha) {
     alpha = _.defaults(alpha, 255)|0;
 
-    var result = new Uint8Array(this.$.width * this.$.height * 4);
+    var length = this.$.width * this.$.height;
+    var result = new Uint8Array(length * 4);
     var data   = this.$.data;
     var width  = this.$.width;
     var height = this.$.height;
@@ -28,5 +29,26 @@ module.exports = function(gr, _) {
     }
 
     return result;
+  });
+
+  gr.CanvasRGB.addMethod("toRGBA", function(alpha) {
+    alpha = _.defaults(alpha, 255)|0;
+
+    var length = this.$.width * this.$.height;
+    var result = new Uint8Array(length * 4);
+    var data   = this.$.data;
+
+    for (var i = 0, j = 0, k = 0; i < length; i++) {
+      result[j++] = data[k++];
+      result[j++] = data[k++];
+      result[j++] = data[k++];
+      result[j++] = alpha;
+    }
+
+    return result;
+  });
+
+  gr.CanvasRGBA.addMethod("toRGBA", function() {
+    return new Uint8Array(this.$.data);
   });
 };

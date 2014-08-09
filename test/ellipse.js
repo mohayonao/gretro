@@ -6,7 +6,7 @@ var $$ = 15;
 var ll = 11;
 var __ =  0;
 
-describe("#ellipse", function() {
+describe("Canvas#ellipse", function() {
   var canvas = null;
 
   beforeEach(function() {

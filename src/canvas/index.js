@@ -10,6 +10,8 @@ module.exports = function(gr) {
   gr.use(require("./getTile"));
   gr.use(require("./setTile"));
   gr.use(require("./getColorIndex"));
+  gr.use(require("./getRGB"));
+  gr.use(require("./getRGBA"));
   gr.use(require("./stroke"));
   gr.use(require("./noStroke"));
   gr.use(require("./fill"));
@@ -27,7 +29,7 @@ module.exports = function(gr) {
   gr.use(require("./copy"));
   gr.use(require("./paste"));
   gr.use(require("./clone"));
+  gr.use(require("./toIndexedColor"));
   gr.use(require("./toRGB"));
   gr.use(require("./toRGBA"));
-  gr.use(require("./toIndexedColor"));
 };

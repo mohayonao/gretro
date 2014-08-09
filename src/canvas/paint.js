@@ -12,15 +12,15 @@ module.exports = function(gr, _) {
     y = x|0;
 
     _.fill(this, function(color) {
-      var $ = this.$;
-      var targetColor = getPixel($, x, y);
+      var that = this;
+      var targetColor = getPixel(that, x, y);
 
       if (color === targetColor) {
         return;
       }
 
       var isEdge = function(x, y) {
-        return getPixel($, x, y) !== targetColor;
+        return getPixel(that, x, y) !== targetColor;
       };
       var scanLine = function(lx, rx, y, queue) {
         while (lx <= rx) {
@@ -39,6 +39,10 @@ module.exports = function(gr, _) {
 
       perform(this, x, y, color, isEdge, scanLine);
     });
+  });
+
+  gr.CanvasRGB.addMethod("paint", function() {
+    throw new Error("CanvasRGB is not supported #paint");
   });
 
   function perform(that, x, y, color, isEdge, scanLine) {
@@ -82,9 +86,9 @@ module.exports = function(gr, _) {
     } while (q.length);
   }
 
-  function getPixel($, x, y) {
-    if (_.inRange(x, $.minX, $.maxX) && _.inRange(y, $.minX, $.maxY)) {
-      return $.data[y * $.width + x];
+  function getPixel(cnv, x, y) {
+    if (_.inClip(cnv, x, y)) {
+      return cnv.$.data[y * cnv.$.width + x];
     }
     return -1;
   }
