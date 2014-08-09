@@ -24,21 +24,14 @@ module.exports = function(gr, _) {
   var Y0 = 1;
   var Y1 = 2;
   var A  = 3;
+  var V  = 4;
 
   function eq(pt1, pt2) {
     return pt1[X] === pt2[X] && pt1[Y] === pt2[Y];
   }
 
-  function rangeIter(n, m, fn) {
-    while (n <= m) {
-      fn(n++);
-    }
-  }
-
-  function pairsEach(list, fn) {
-    for (var i = 1, imax = list.length; i < imax; i += 2) {
-      fn(list[i - 1], list[i]);
-    }
+  function angle(pt1, pt2) {
+    return (pt2[X] - pt1[X]) / (pt2[Y] - pt1[Y]);
   }
 
   function clipPoint(pt1, pt2, minY, maxY) {
@@ -100,22 +93,13 @@ module.exports = function(gr, _) {
         continue;
       }
 
-      var c2 = vtx[(i + 2) % vtxLength];
       var edge = [
         pt1[Y] < pt2[Y] ? pt1[X] : pt2[X],
         0,
         0,
-        (pt2[X] - pt1[X]) / (pt2[Y] - pt1[Y])
+        angle(pt1, pt2),
+        pt1[Y] < pt2[Y] ? +1 : -1
       ];
-
-      if ((pt2[Y] - pt1[Y]) * (pt2[Y] - c2[Y]) < 0) {
-        if (pt1[Y] < pt2[Y]) {
-          pt2[Y] -= 1;
-        } else {
-          pt2[Y] += 1;
-          edge[X] += edge[A];
-        }
-      }
 
       edge[Y0] = Math.min(pt1[Y], pt2[Y]);
       edge[Y1] = Math.max(pt1[Y], pt2[Y]);
@@ -126,26 +110,51 @@ module.exports = function(gr, _) {
     return result;
   }
 
-  function inScanLine(edgeList, y) {
-    return edgeList.filter(function(edge) {
+  function inScanLine(y) {
+    return function(edge) {
       return _.inRange(y, edge[Y0], edge[Y1]);
-    });
+    };
+  }
+
+  function sortByX(a, b) {
+    return a[X] - b[X];
+  }
+
+  function removeIfSameVectorContinue(_, i, list) {
+    return i === 0 || list[i][V] !== list[i - 1][V];
+  }
+
+  function fetchX(edge) {
+    return edge[X];
   }
 
   function updateX(edge) {
-    var x = edge[X];
-
     edge[X] += edge[A];
-
-    return x;
   }
 
   function fill(that, edgeList, color) {
-    rangeIter(that.$.minY, that.$.maxX, function(y) {
-      pairsEach(inScanLine(edgeList, y).map(updateX).sort(), function(x1, x2) {
-        _.putLine(that, Math.round(x1), Math.round(x2), y, color);
-      });
+    var minY = that.$.maxY;
+    var maxY = that.$.minY;
+
+    edgeList.forEach(function(edge) {
+      minY = Math.min(minY, edge[Y0]);
+      maxY = Math.max(maxY, edge[Y1]);
     });
+
+    for (var y = minY; y <= maxY; y++) {
+      var scanned = edgeList.filter(inScanLine(y));
+      var sortedX = scanned.sort(sortByX)
+        .filter(removeIfSameVectorContinue)
+        .map(fetchX);
+
+      for (var i = 1, imax = sortedX.length; i < imax; i += 2) {
+        var x1 = sortedX[i - 1];
+        var x2 = sortedX[i];
+        _.putLine(that, Math.round(x1), Math.round(x2), y, color);
+      }
+
+      scanned.forEach(updateX);
+    }
   }
 
   function stroke(that, vtx) {
