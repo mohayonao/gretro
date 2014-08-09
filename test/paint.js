@@ -50,6 +50,23 @@ describe("#paint", function() {
     expect(result, "should return self").to.equal(canvas);
   });
 
+  it("when background color and fill color are same", function() {
+    var result = canvas.fill(__).paint(3, 3);
+
+    expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
+      __,__,__,$$,__,__,__,__,
+      __,__,__,$$,__,__,__,__,
+      __,__,__,$$,$$,$$,$$,$$,
+      __,__,__,__,oo,__,__,__,
+      __,__,__,__,oo,__,__,__,
+      $$,$$,$$,$$,$$,__,__,__,
+      __,__,__,__,$$,__,__,__,
+      __,__,__,__,$$,__,__,__,
+    ]));
+
+    expect(result, "should return self").to.equal(canvas);
+  });
+
   it("should NOT be able to fill when noFill", function() {
     var result = canvas.noFill().paint(3, 3);
 

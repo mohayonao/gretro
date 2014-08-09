@@ -15,10 +15,14 @@ module.exports = function(gr, _) {
       var $ = this.$;
       var targetColor = getPixel($, x, y);
 
-      function isEdge(x, y) {
-        return getPixel($, x, y) !== targetColor;
+      if (color === targetColor) {
+        return;
       }
-      function scanLine(lx, rx, y, queue) {
+
+      var isEdge = function(x, y) {
+        return getPixel($, x, y) !== targetColor;
+      };
+      var scanLine = function(lx, rx, y, queue) {
         while (lx <= rx) {
           while (lx <= rx && isEdge(lx, y)) {
             lx++;
@@ -31,7 +35,7 @@ module.exports = function(gr, _) {
           }
           queue.push(lx - 1, y);
         }
-      }
+      };
 
       perform(this, x, y, color, isEdge, scanLine);
     });
