@@ -87,13 +87,6 @@ function colorize(color, tilePalette) {
 }
 
 function createCanvasData(width, height, src) {
-  function getPixel(x, y) {
-    if (data.minX <= x && x <= data.maxX && data.minX <= y && y <= data.maxY) {
-      return data.data[y * width + x];
-    }
-    return -1;
-  }
-
   function putPixel(x, y, color) {
     var colorIndex = color.valueOf(x, y);
     if (colorIndex !== -1) {
@@ -108,16 +101,19 @@ function createCanvasData(width, height, src) {
     minY  : 0,
     maxX  : width  - 1,
     maxY  : height - 1,
-    getPixel: getPixel,
     putPixel: putPixel,
   };
 
   if (src) {
     data.data = new Uint8Array(src.data);
+    data.strokeColor  = src.strokeColor;
+    data.fillColor    = src.fillColor;
     data.colorPalette = new Uint8Array(src.colorPalette);
     data.tilePalette  = new Uint16Array(src.tilePalette);
   } else {
     data.data = new Uint8Array(width * height);
+    data.strokeColor  =  0;
+    data.fillColor    = -1;
     data.colorPalette = new Uint8Array(defaultColorPalette);
     data.tilePalette  = new Uint16Array(defaultTilePalette);
   }
@@ -158,47 +154,63 @@ function Canvas(width, height, src) {
   this.getColorIndex = function(x, y) {
     return getColorIndex(self, x, y);
   };
-  this.clear = function(color) {
-    clear(self, colorize(color, tilePalette));
+  this.stroke = function(color) {
+    self.strokeColor = colorize(color, tilePalette);
     return this;
   };
-  this.dot = function(x, y, color) {
-    dot(self, x|0, y|0, colorize(color, tilePalette));
+  this.noStroke = function() {
+    self.strokeColor = -1;
     return this;
   };
-  this.line = function(x1, y1, x2, y2, color) {
-    line(self, x1|0, y1|0, x2|0, y2|0, colorize(color, tilePalette));
+  this.fill = function(color) {
+    self.fillColor = colorize(color, tilePalette);
     return this;
   };
-  this.polygon = function(vtx, color, filled) {
+  this.noFill = function() {
+    self.fillColor = -1;
+    return this;
+  };
+  this.clear = function() {
+    clear(self);
+    return this;
+  };
+  this.dot = function(x, y) {
+    dot(self, x|0, y|0);
+    return this;
+  };
+  this.line = function(x1, y1, x2, y2) {
+    line(self, x1|0, y1|0, x2|0, y2|0);
+    return this;
+  };
+  this.polygon = function(vtx) {
     vtx = Array.isArray(vtx) ? vtx.map(function(edge) {
       return [ edge[0]|0, edge[1]|0 ];
     }) : [];
-    polygon(self, vtx, colorize(color, tilePalette), !!filled);
+    polygon(self, vtx);
     return this;
   };
-  this.rect = function(x, y, width, height, color, filled) {
-    rect(self, x|0, y|0, width|0, height|0, colorize(color, tilePalette), !!filled);
+  this.rect = function(x, y, width, height) {
+    rect(self, x|0, y|0, width|0, height|0);
     return this;
   };
-  this.circle = function(cx, cy, r, color, filled) {
-    circle(self, cx|0, cy|0, r|0, colorize(color, tilePalette), !!filled);
+  this.circle = function(cx, cy, r) {
+    circle(self, cx|0, cy|0, r|0);
     return this;
   };
-  this.ellipse = function(cx, cy, rx, ry, color, filled) {
-    ellipse(self, cx|0, cy|0, rx|0, ry|0, colorize(color, tilePalette), !!filled);
+  this.ellipse = function(cx, cy, rx, ry) {
+    ellipse(self, cx|0, cy|0, rx|0, ry|0);
     return this;
   };
-  this.char = function(ch, x, y, color) {
-    char(self, ch|0, x|0, y|0, colorize(color, tilePalette));
+  this.char = function(ch, x, y) {
+    char(self, ch|0, x|0, y|0);
     return this;
   };
-  this.text = function(str, x, y, color) {
-    text(self, String(str), x|0, y|0, colorize(color, tilePalette));
+  this.text = function(str, x, y) {
+    text(self, String(str), x|0, y|0);
     return this;
   };
-  this.paint = function(x, y, color) {
-    paint(self, x|0, y|0, colorize(color, tilePalette));
+  this.paint = function(x, y) {
+    paint(self, x|0, y|0);
     return this;
   };
   this.copy = function(x1, y1, x2, y2) {

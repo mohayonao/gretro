@@ -20,8 +20,9 @@ describe("#copy", function() {
     __,__,__,__,__,__,__,__,
     */
     canvas = new gretro.Canvas(8, 8);
-    canvas.circle(3, 3, 3, $$);
-    canvas.dot(0, 0, $$);
+    canvas.stroke($$);
+    canvas.circle(3, 3, 3);
+    canvas.dot(0, 0);
   });
 
   it("should return new canvas", function() {

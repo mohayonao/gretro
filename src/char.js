@@ -98,12 +98,12 @@ var fonts = [
   [ 0x00, 0x41, 0x36, 0x08, 0x00 ], // }
 ];
 
-module.exports = function(self, ch, x, y, color) {
-  if (0x21 <= ch && ch <= 0x7e) {
+module.exports = function(self, ch, x, y) {
+  if (self.strokeColor !== -1 && 0x21 <= ch && ch <= 0x7e) {
     fonts[ch - 0x21].forEach(function(part, i) {
       [ 1, 2, 4, 8, 16, 32, 64 ].forEach(function(bit, j) {
         if (part & bit) {
-          dot(self, x + i, y + j, color);
+          dot(self, x + i, y + j);
         }
       });
     });

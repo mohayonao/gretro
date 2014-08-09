@@ -12,8 +12,8 @@ describe("color", function() {
     canvas = new gretro.Canvas(8, 8);
   });
 
-  it("monotone", function() {
-    canvas.clear($$);
+  it("shoule be able to set a number as monotone", function() {
+    canvas.fill($$).clear();
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       $$,$$,$$,$$,$$,$$,$$,$$,
@@ -27,8 +27,8 @@ describe("color", function() {
     ]));
   });
 
-  it("tile", function() {
-    canvas.clear([　$$, __, 8 ]);
+  it("should be able to an array as tile pattern", function() {
+    canvas.fill([　$$, __, 8 ]).clear();
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       __,$$,__,$$,__,$$,__,$$,
@@ -42,8 +42,8 @@ describe("color", function() {
     ]));
   });
 
-  it("monotone", function() {
-    canvas.clear([　__, __, 0 ]);
+  it("should convert an array to monotone if like monotone pattern", function() {
+    canvas.fill([　__, __, 0 ]).clear();
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       __,__,__,__,__,__,__,__,
@@ -57,10 +57,10 @@ describe("color", function() {
     ]));
   });
 
-  it("function", function() {
-    canvas.clear(function(x, y) {
+  it("should be able to a function as color generator", function() {
+    canvas.fill(function(x, y) {
       return y & 1 ? $$ : -1;
-    });
+    }).clear();
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       __,__,__,__,__,__,__,__,
@@ -74,8 +74,9 @@ describe("color", function() {
     ]));
   });
 
-  it("invalid value", function() {
-    canvas.clear("blue");
+  it("should convert an invalid value to 0", function() {
+    canvas.fill($$).clear();
+    canvas.fill("").clear();
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       __,__,__,__,__,__,__,__,

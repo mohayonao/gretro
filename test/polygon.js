@@ -3,19 +3,20 @@ var expect = chai.expect;
 var gretro = require("../");
 
 var $$ = 15;
+var ll = 11;
 var __ =  0;
 
-describe("#line", function() {
+describe("#ploygon", function() {
   var canvas = null;
 
   beforeEach(function() {
     canvas = new gretro.Canvas(8, 8);
   });
 
-  it("should draw a polygon", function() {
-    var result = canvas.polygon([
+  it("should be able to stroke a polygon", function() {
+    var result = canvas.stroke($$).noFill().polygon([
       [ 4, 1 ], [ 1, 4 ], [ 6, 6 ]
-    ], $$);
+    ]);
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       __,__,__,__,__,__,__,__,
@@ -32,6 +33,9 @@ describe("#line", function() {
   });
 
   describe("should be able to fill a polygon", function() {
+    beforeEach(function() {
+      canvas.noStroke().fill($$);
+    });
     describe("no clipping", function() {
       afterEach(function() {
         expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
@@ -48,12 +52,12 @@ describe("#line", function() {
       it("a -> b -> c", function() {
         canvas.polygon([
           [ 4, 1 ], [ 1, 4 ], [ 6, 6 ]
-        ], $$, true);
+        ]);
       });
       it("c -> b -> a", function() {
         canvas.polygon([
           [ 6, 6 ], [ 1, 4 ], [ 4, 1 ]
-        ], $$, true);
+        ]);
       });
     });
 
@@ -61,7 +65,7 @@ describe("#line", function() {
       it("A -> B -> C", function() {
         canvas.polygon([
           [ 4, -2 ], [ -2, 4 ], [ 9, 9 ]
-        ], $$, true);
+        ]);
 
         expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
           __,__,$$,$$,$$,__,__,__,
@@ -91,21 +95,40 @@ describe("#line", function() {
       });
 
       it("not array", function() {
-        canvas.polygon(100, $$, true);
+        canvas.polygon(100);
       });
 
       it("empty", function() {
         canvas.polygon([
           /* empty */
-        ], $$, true);
+        ]);
       });
 
       it("same points", function() {
         canvas.polygon([
           [ 2, 2 ], [ 2, 2 ], [ 2, 2 ]
-        ], $$, true);
+        ]);
       });
     });
+  });
+
+  it("should be able to fill and stroke a polygon", function() {
+    var result = canvas.stroke($$).fill(ll).polygon([
+      [ 4, 1 ], [ 1, 4 ], [ 6, 6 ]
+    ]);
+
+    expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,$$,__,__,__,
+      __,__,__,$$,$$,__,__,__,
+      __,__,$$,ll,ll,$$,__,__,
+      __,$$,$$,ll,ll,$$,__,__,
+      __,__,__,$$,$$,ll,$$,__,
+      __,__,__,__,__,$$,$$,__,
+      __,__,__,__,__,__,__,__,
+    ]));
+
+    expect(result, "should return self").to.equal(canvas);
   });
 
 });

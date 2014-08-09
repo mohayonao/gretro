@@ -1,6 +1,7 @@
 "use strict";
 
-module.exports = function(self, color) {
+module.exports = function(self) {
+  var color  = self.fillColor;
   var width  = self.width;
   var height = self.height;
 

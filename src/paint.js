@@ -1,8 +1,22 @@
 "use strict";
 
-var line = require("./line");
+function line(self, x1, x2, y, color) {
+  x1 = Math.max(x1, self.minX);
+  x2 = Math.min(x2, self.maxX);
 
-function process(self, x, y, color, isEdge, scanLine) {
+  while (x1 <= x2) {
+    self.putPixel(x1++, y, color);
+  }
+}
+
+function getPixel(self, x, y) {
+  if (self.minX <= x && x <= self.maxX && self.minX <= y && y <= self.maxY) {
+    return self.data[y * self.width + x];
+  }
+  return -1;
+}
+
+function process(self, x, y, isEdge, scanLine) {
   function scanRight(x, y) {
     while (x <= self.maxX && !isEdge(x + 1, y)) {
       x++;
@@ -16,6 +30,7 @@ function process(self, x, y, color, isEdge, scanLine) {
     return x;
   }
 
+  var color = self.fillColor;
   var q = [ x, y ];
 
   do {
@@ -29,7 +44,7 @@ function process(self, x, y, color, isEdge, scanLine) {
     var rx = scanRight(x, y);
     var lx = scanLeft(x, y);
 
-    line(self, lx, y, rx, y, color);
+    line(self, lx, rx, y, color);
 
     if (y - 1 >= 0) {
       scanLine(lx, rx, y - 1, q);
@@ -42,11 +57,15 @@ function process(self, x, y, color, isEdge, scanLine) {
   } while (q.length);
 }
 
-module.exports = function(self, x, y, color) {
-  var targetColor = self.getPixel(x, y);
+module.exports = function(self, x, y) {
+  if (self.fillColor === -1) {
+    return;
+  }
+
+  var targetColor = getPixel(self, x, y);
 
   function isEdge(x, y) {
-    return self.getPixel(x, y) !== targetColor;
+    return getPixel(self, x, y) !== targetColor;
   }
   function scanLine(lx, rx, y, queue) {
     while (lx <= rx) {
@@ -63,5 +82,5 @@ module.exports = function(self, x, y, color) {
     }
   }
 
-  process(self, x, y, color, isEdge, scanLine);
+  process(self, x, y, isEdge, scanLine);
 };

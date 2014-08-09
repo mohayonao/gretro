@@ -8,20 +8,20 @@ var TOP    = 4;
 var BOTTOM = 8;
 
 function lineH(self, x1, x2, y, color) {
-  var x    = Math.max(x1, self.minX);
-  var maxX = Math.min(x2, self.maxX);
+  x1 = Math.max(x1, self.minX);
+  x2 = Math.min(x2, self.maxX);
 
-  while (x <= maxX) {
-    self.putPixel(x++, y, color);
+  while (x1 <= x2) {
+    self.putPixel(x1++, y, color);
   }
 }
 
 function lineV(self, y1, y2, x, color) {
-  var y    = Math.max(y1, self.minY);
-  var maxY = Math.min(y2, self.maxY);
+  y1 = Math.max(y1, self.minY);
+  y2 = Math.min(y2, self.maxY);
 
-  while (y <= maxY) {
-    self.putPixel(x, y++, color);
+  while (y1 <= y2) {
+    self.putPixel(x, y1++, color);
   }
 }
 
@@ -170,21 +170,25 @@ function clip(self, pt1, pt2) {
   return true;
 }
 
-module.exports = function(self, x1, y1, x2, y2, color) {
-  if (y1 === y2) {
-    if (self.minY <= y1 && y1 <= self.maxY) {
-      lineH(self, Math.min(x1, x2), Math.max(x1, x2), y1, color);
-    }
-  } else if (x1 === x2) {
-    if (self.minX <= x1 && x1 <= self.maxX) {
-      lineV(self, Math.min(y1, y2), Math.max(y1, y2), x1, color);
-    }
-  } else {
-    var pt1 = [ x1, y1 ];
-    var pt2 = [ x2, y2 ];
+module.exports = function(self, x1, y1, x2, y2) {
+  var color = self.strokeColor;
 
-    if (clip(self, pt1, pt2)) {
-      lineD(self, pt1[X], pt1[Y], pt2[X], pt2[Y], color);
+  if (color !== -1) {
+    if (y1 === y2) {
+      if (self.minY <= y1 && y1 <= self.maxY) {
+        lineH(self, Math.min(x1, x2), Math.max(x1, x2), y1, color);
+      }
+    } else if (x1 === x2) {
+      if (self.minX <= x1 && x1 <= self.maxX) {
+        lineV(self, Math.min(y1, y2), Math.max(y1, y2), x1, color);
+      }
+    } else {
+      var pt1 = [ x1, y1 ];
+      var pt2 = [ x2, y2 ];
+
+      if (clip(self, pt1, pt2)) {
+        lineD(self, pt1[X], pt1[Y], pt2[X], pt2[Y], color);
+      }
     }
   }
 };

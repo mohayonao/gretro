@@ -5,7 +5,7 @@ var gretro = require("../");
 var $$ = 15;
 var __ =  0;
 
-describe("#copy", function() {
+describe("#paste", function() {
   var canvas = null;
   var src    = null;
 
@@ -21,14 +21,14 @@ describe("#copy", function() {
     __,__,__,__,__,__,__,__,
     */
     src = new gretro.Canvas(8, 8);
-    src.circle(3, 3, 3, $$);
+    src.stroke($$).noFill().circle(3, 3, 3);
   });
 
   beforeEach(function() {
     canvas = new gretro.Canvas(8, 8);
   });
 
-  it("should paste other canvas", function() {
+  it("should be able to paste the specified canvas", function() {
     var result = canvas.paste(src, 0, 0, -1);
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([

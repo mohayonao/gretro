@@ -2,20 +2,33 @@
 
 var line = require("./line");
 
-function fill(self, x1, y1, x2, y2, color) {
-  for (var y = y1; y <= y2; y++) {
-    line(self, x1, y, x2, y, color);
+function _line(self, x1, x2, y, color) {
+  if (self.minY <= y && y <= self.maxY) {
+    x1 = Math.max(x1, self.minX);
+    x2 = Math.min(x2, self.maxX);
+
+    while (x1 <= x2) {
+      self.putPixel(x1++, y, color);
+    }
   }
 }
 
-function stroke(self, x1, y1, x2, y2, color) {
-  line(self, x1, y1, x2, y1, color);
-  line(self, x2, y1, x2, y2, color);
-  line(self, x2, y2, x1, y2, color);
-  line(self, x1, y2, x1, y1, color);
+function fill(self, x1, y1, x2, y2) {
+  var color = self.fillColor;
+
+  for (var y = y1; y <= y2; y++) {
+    _line(self, x1, x2, y, color);
+  }
 }
 
-module.exports = function(self, x, y, w, h, color, filled) {
+function stroke(self, x1, y1, x2, y2) {
+  line(self, x1, y1, x2, y1);
+  line(self, x2, y1, x2, y2);
+  line(self, x2, y2, x1, y2);
+  line(self, x1, y2, x1, y1);
+}
+
+module.exports = function(self, x, y, w, h) {
   var dx = Math.abs(w) - 1;
   var dy = Math.abs(h) - 1;
   var sx = w >= 0 ? +1 : -1;
@@ -25,9 +38,10 @@ module.exports = function(self, x, y, w, h, color, filled) {
   var y1 = (sy === +1) ? y : y + dy * sy;
   var y2 = (sy === -1) ? y : y + dy * sy;
 
-  if (filled) {
-    fill(self, x1, y1, x2, y2, color);
-  } else {
-    stroke(self, x1, y1, x2, y2, color);
+  if (self.fillColor !== -1) {
+    fill(self, x1, y1, x2, y2);
+  }
+  if (self.strokeColor !== -1) {
+    stroke(self, x1, y1, x2, y2);
   }
 };

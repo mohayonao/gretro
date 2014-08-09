@@ -42,7 +42,7 @@ describe("Canvas", function() {
     it("should return raw data", function() {
       var canvas = new gretro.Canvas(4, 4);
 
-      canvas.paint(0, 0, [ 2, 4, 8 ]);
+      canvas.fill([ 2, 4, 8 ]).clear();
 
       expect(canvas.getRawData()).to.eql(new Uint8Array([
         4, 2, 4, 2,
@@ -71,7 +71,7 @@ describe("Canvas", function() {
       expect(result, "should return self").to.equal(canvas);
       expect(canvas.getTile(1)).to.equal(0xf0f0);
     });
-    it("should not set tile pattern code if tileIndex is 0", function() {
+    it("should NOT set tile pattern code if tileIndex is 0", function() {
       var canvas = new gretro.Canvas(8, 8);
       var result = canvas.setTile(0, 0xf0f0);
 
@@ -84,7 +84,7 @@ describe("Canvas", function() {
     it("should return color index", function() {
       var canvas = new gretro.Canvas(8, 8);
 
-      canvas.paint(0, 0, [ 0, 4, 8 ]);
+      canvas.fill([ 0, 4, 8 ]).paint(0, 0);
 
       expect(canvas.getColorIndex( 0,  0)).to.equal( 4);
       expect(canvas.getColorIndex( 1,  0)).to.equal( 0);
@@ -93,16 +93,17 @@ describe("Canvas", function() {
   });
 
   describe("#clone", function() {
-    it("should return a clone", function() {
+    it("should return a cloned canvas", function() {
       var canvas = new gretro.Canvas(8, 8);
 
       canvas.setColor(2, 0x123456);
-      canvas.circle(4, 4, 3, 2);
+      canvas.stroke(2).circle(4, 4, 3);
 
       var cloned = canvas.clone();
 
       expect(canvas).to.not.equal(cloned);
       expect(cloned.toRGB()).to.eql(canvas.toRGB());
+      expect(cloned.getColor(2)).to.equal(canvas.getColor(2));
     });
   });
 

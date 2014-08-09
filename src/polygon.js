@@ -8,6 +8,15 @@ var Y0 = 1;
 var Y1 = 2;
 var A  = 3;
 
+function _line(self, x1, x2, y, color) {
+  x1 = Math.max(x1, self.minX);
+  x2 = Math.min(x2, self.maxX);
+
+  while (x1 <= x2) {
+    self.putPixel(x1++, y, color);
+  }
+}
+
 function eq(pt1, pt2) {
   return pt1[X] === pt2[X] && pt1[Y] === pt2[Y];
 }
@@ -127,29 +136,31 @@ function updateX(edge) {
   return x;
 }
 
-function fill(self, edgeList, color) {
+function fill(self, edgeList) {
+  var color = self.fillColor;
   rangeFn(self.minY, self.maxX, function(y) {
     pairsEach(inScanLine(edgeList, y).map(updateX).sort(), function(x1, x2) {
-      line(self, Math.round(x1), y, Math.round(x2), y, color);
+      _line(self, Math.round(x1), Math.round(x2), y, color);
     });
   });
 }
 
-function stroke(self, vtx, color) {
+function stroke(self, vtx) {
   var vtxLength = vtx.length;
 
   for (var i = 0, imax = vtxLength; i < imax; i++) {
     var pt1 = vtx[i];
     var pt2 = vtx[(i + 1) % vtxLength];
 
-    line(self, pt1[X], pt1[Y], pt2[X], pt2[Y], color);
+    line(self, pt1[X], pt1[Y], pt2[X], pt2[Y]);
   }
 }
 
-module.exports = function(self, vtx, color, filled) {
-  if (filled) {
-    fill(self, toEdge(clipVtx(vtx, self.minY, self.maxY)), color);
-  } else {
-    stroke(self, vtx, color);
+module.exports = function(self, vtx) {
+  if (self.fillColor !== -1) {
+    fill(self, toEdge(clipVtx(vtx, self.minY, self.maxY)));
+  }
+  if (self.strokeColor !== -1) {
+    stroke(self, vtx);
   }
 };
