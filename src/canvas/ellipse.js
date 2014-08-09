@@ -4,12 +4,17 @@ module.exports = function(gr, _) {
   /**
    * ellipse
    *
-   * @param {int}
-   * @param {int}
-   * @param {int}
-   * @param {int}
+   * @param {int} cx
+   * @param {int} cy
+   * @param {int} rx
+   * @param {int} ry
    */
   gr.Canvas.addMethod("ellipse", function(cx, cy, rx, ry) {
+    cx = cx|0;
+    cy = cy|0;
+    rx = rx|0;
+    ry = ry|0;
+
     _.fill(this, function(color) {
       fill(this, cx, cy, rx, ry, color);
     });

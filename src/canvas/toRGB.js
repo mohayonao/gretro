@@ -3,6 +3,8 @@
 module.exports = function(gr) {
   /**
    * toRGB
+   *
+   * @return {Uint8Array}
    */
   gr.Canvas.addMethod("toRGB", function() {
     var result = new Uint8Array(this.$.width * this.$.height * 3);

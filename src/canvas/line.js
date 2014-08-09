@@ -4,12 +4,17 @@ module.exports = function(gr, _) {
   /**
    *  line
    *
-   *  @param {int}
-   *  @param {int}
-   *  @param {int}
-   *  @param {int}
+   *  @param {int} x1
+   *  @param {int} y1
+   *  @param {int} x2
+   *  @param {int} y2
    */
   gr.Canvas.addMethod("line", function(x1, y1, x2, y2) {
+    x1 = x1|0;
+    y1 = y1|0;
+    x2 = x2|0;
+    y2 = y2|0;
+
     _.stroke(this, function(color) {
       if (y1 === y2) {
         lineH(this.$, Math.min(x1, x2), Math.max(x1, x2), y1, color);

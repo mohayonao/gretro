@@ -3,6 +3,8 @@
 module.exports = function(gr) {
   /**
    * clone
+   *
+   * @return {Canvas}
    */
   gr.Canvas.addMethod("clone", function() {
     var newInstance = new gr.Canvas(this.$.width, this.$.height, this.$.data);

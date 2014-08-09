@@ -6,15 +6,16 @@ module.exports = function(gr, _) {
   /**
    * Canvas
    *
-   * @param {int}
-   * @param {int}
-   * @param {Uint8Array}
+   * @param  {int} [width=640]
+   * @param  {int} [height=400]
+   * @param  {Uint8Array} [buffer]
+   * @return {Canvas}
    */
-  function Canvas(width, height, src) {
+  function Canvas(width, height, buffer) {
     width  = _.defaults(width , 640)|0;
     height = _.defaults(height, 400)|0;
 
-    var $ = dollar(width, height, src);
+    var $ = dollar(width, height, buffer);
 
     $.putPixel = function(x, y, color) {
       var colorIndex = color.valueOf(x, y);

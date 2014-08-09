@@ -4,7 +4,8 @@ module.exports = function(gr) {
   /**
    * getColor
    *
-   * @param {int}
+   * @param {int} index
+   * @return {int} RGB hex code
    */
   gr.Canvas.addMethod("getColor", function(index) {
     index = (index & 15) * 3;

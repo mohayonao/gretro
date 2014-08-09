@@ -4,12 +4,17 @@ module.exports = function(gr, _) {
   /**
    * rect
    *
-   * @param {int}
-   * @param {int}
-   * @param {int}
-   * @param {int}
+   * @param {int} x
+   * @param {int} y
+   * @param {int} w
+   * @param {int} h
    */
   gr.Canvas.addMethod("rect", function(x, y, w, h) {
+    x = x|0;
+    y = y|0;
+    w = w|0;
+    h = h|0;
+
     var dx = Math.abs(w) - 1;
     var dy = Math.abs(h) - 1;
     var sx = w >= 0 ? +1 : -1;

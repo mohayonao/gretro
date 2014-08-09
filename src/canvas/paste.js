@@ -4,22 +4,26 @@ module.exports = function(gr) {
   /**
    *  paste
    *
-   *  @param {Canvas}
+   *  @param {Canvas} cnv
    *  @param {int}    x
    *  @param {int}    y
    *  @param {int}    mask
    */
-  gr.Canvas.addMethod("paste", function(canvas, x, y, mask) {
-    if (canvas instanceof gr.Canvas) {
-      paste(this.$, canvas, x|0, y|0, mask);
+  gr.Canvas.addMethod("paste", function(cnv, x, y, mask) {
+    x    = x|0;
+    y    = y|0;
+    mask = mask|0;
+
+    if (cnv instanceof gr.Canvas) {
+      paste(this.$, cnv, x, y, mask);
     }
   });
 
-  function paste($, canvas, x, y, mask) {
-    var srcData = canvas.getRawData();
+  function paste($, cnv, x, y, mask) {
+    var srcData = cnv.getRawData();
     var dstData = $.data;
-    var srcWidth  = canvas.getWidth();
-    var srcHeight = canvas.getHeight();
+    var srcWidth  = cnv.getWidth();
+    var srcHeight = cnv.getHeight();
     var dstWidth  = $.width;
     var width  = srcWidth;
     var height = srcHeight;

@@ -19,6 +19,9 @@ function fromTileItems(items, tilePalette) {
 
 /**
  * colorize
+ *
+ * @param {int|array|function} color
+ * @param {Uint16Array}        tileIndex
  */
 module.exports = function(color, tilePalette) {
   if (typeof color === "number") {

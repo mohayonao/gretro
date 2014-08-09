@@ -4,7 +4,8 @@ module.exports = function(gr, _) {
   /**
    * toRGBA
    *
-   * @param {int} alpha opacity
+   * @param {int} [alpha=255] opacity
+   * @return {Uint8Array}
    */
   gr.Canvas.addMethod("toRGBA", function(alpha) {
     alpha = _.defaults(alpha, 255)|0;

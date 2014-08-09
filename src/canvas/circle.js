@@ -4,11 +4,15 @@ module.exports = function(gr, _) {
   /**
    * circle
    *
-   * @param {int}
-   * @param {int}
-   * @param {int}
+   * @param {int} cx
+   * @param {int} cy
+   * @param {int} r
    */
   gr.Canvas.addMethod("circle", function(cx, cy, r) {
+    cx = cx|0;
+    cy = cy|0;
+    r  = r |0;
+
     _.fill(this, function(color) {
       fill(this, cx, cy, r, color);
     });

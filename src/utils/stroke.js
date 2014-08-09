@@ -2,9 +2,12 @@
 
 /**
  * stroke
+ *
+ * @param {Canvas}   cnv
+ * @param {function} fn
  */
-module.exports = function(that, fn) {
-  if (that.$.strokeColor !== -1) {
-    fn.call(that, that.$.strokeColor);
+module.exports = function(cnv, fn) {
+  if (cnv.$.strokeColor !== -1) {
+    fn.call(cnv, cnv.$.strokeColor);
   }
 };

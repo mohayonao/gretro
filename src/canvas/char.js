@@ -4,11 +4,15 @@ module.exports = function(gr, _) {
   /**
    * char
    *
-   * @param {int}
-   * @param {int}
-   * @param {int}
+   * @param {int} ch
+   * @param {int} x
+   * @param {int} y
    */
   gr.Canvas.addMethod("char", function(ch, x, y) {
+    ch = ch|0;
+    x  = x|0;
+    y  = y|0;
+
     if (_.inRange(ch, 0x21, 0x7e)) {
       _.stroke(this, function(color) {
         FONTS[ch - 0x21].forEach(function(part, i) {

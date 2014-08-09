@@ -2,9 +2,12 @@
 
 /**
  * fill
+ *
+ * @param {Canvas}   cnv
+ * @param {function} fn
  */
-module.exports = function(that, fn) {
-  if (that.$.fillColor !== -1) {
-    fn.call(that, that.$.fillColor);
+module.exports = function(cnv, fn) {
+  if (cnv.$.fillColor !== -1) {
+    fn.call(cnv, cnv.$.fillColor);
   }
 };

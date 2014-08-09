@@ -4,7 +4,7 @@ module.exports = function(gr, _) {
   /**
    * polygon
    *
-   * @param {array}
+   * @param {array} vtx
    */
   gr.Canvas.addMethod("polygon", function(vtx) {
     vtx = Array.isArray(vtx) ? vtx.map(function(edge) {
@@ -29,7 +29,7 @@ module.exports = function(gr, _) {
     return pt1[X] === pt2[X] && pt1[Y] === pt2[Y];
   }
 
-  function rangeFn(n, m, fn) {
+  function rangeIter(n, m, fn) {
     while (n <= m) {
       fn(n++);
     }
@@ -141,7 +141,7 @@ module.exports = function(gr, _) {
   }
 
   function fill(that, edgeList, color) {
-    rangeFn(that.$.minY, that.$.maxX, function(y) {
+    rangeIter(that.$.minY, that.$.maxX, function(y) {
       pairsEach(inScanLine(edgeList, y).map(updateX).sort(), function(x1, x2) {
         _.putLine(that, Math.round(x1), Math.round(x2), y, color);
       });

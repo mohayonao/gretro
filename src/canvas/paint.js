@@ -8,8 +8,8 @@ module.exports = function(gr, _) {
    *  @param {int} y
    */
   gr.Canvas.addMethod("paint", function(x, y) {
-    x |= 0;
-    y |= 0;
+    x = x|0;
+    y = x|0;
 
     _.fill(this, function(color) {
       var $ = this.$;

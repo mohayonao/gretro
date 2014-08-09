@@ -8,10 +8,15 @@ module.exports = function(gr) {
    * @param {int} y1
    * @param {int} x2
    * @param {int} y2
+   * @return {Canvas}
    */
   gr.Canvas.addMethod("copy", function(x1, y1, x2, y2) {
-    var params = copy(this.$, x1|0, y1|0, x2|0, y2|0);
+    x1 = x1|0;
+    y1 = y1|0;
+    x2 = x2|0;
+    y2 = y2|0;
 
+    var params = copy(this.$, x1, y1, x2, y2);
     var newInstance = new gr.Canvas(params[0], params[1], params[2]);
 
     newInstance.$.colorPalette.set(this.$.colorPalette);
