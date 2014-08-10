@@ -34,11 +34,15 @@ module.exports = function(width, height, pixelSize, buffer) {
     minY: 0,
     maxX: width  - 1,
     maxY: height - 1,
+    mask: null,
     strokeColor:  0,
     fillColor  : -1,
     pixelSize  : pixelSize,
     colorPalette: new Uint8Array(defaultColorPalette),
     tilePalette : new Uint16Array(defaultTilePalette),
+    storableKeys:[
+      "mask", "minX", "minY", "maxX", "maxY", "strokeColor", "fillColor"
+    ]
   };
 
   if (buffer instanceof Uint8Array) {

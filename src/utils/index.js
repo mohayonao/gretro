@@ -10,6 +10,8 @@ exports.defaults = require("./defaults");
 
 exports.rgb2num = require("./rgb2num");
 
+exports.slice = require("./slice");
+
 exports.colorize = require("./colorize");
 
 exports.inCanvas = require("./inCanvas");
