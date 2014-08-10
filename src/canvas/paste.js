@@ -5,8 +5,8 @@ module.exports = function(gr) {
    *  paste
    *
    *  @param {Canvas} src
-   *  @param {int}    x
-   *  @param {int}    y
+   *  @param {int}    [x=0]
+   *  @param {int}    [y=0]
    */
   gr.Canvas.addMethod("paste", function(src, x, y) {
     x = x|0;
@@ -17,21 +17,18 @@ module.exports = function(gr) {
       var dstData = this.$.data;
       var mask    = this.$.mask;
       var pixelSize = this.$.pixelSize;
-      var clipped   = clip(x, y, src.$.width, src.$.height);
+      var clipped   = clip(x, y, src.$.width, src.$.height, this.$.width, this.$.height);
 
       var fn = null;
       if (mask) {
         fn = function(srcIndex, dstIndex, width) {
           for (var i = 0; i < width; i++) {
-            if (mask[srcIndex] === 0) {
-              continue;
+            if (mask[dstIndex] !== 0) {
+              var srcBuf = srcData.subarray(
+                srcIndex * pixelSize, (srcIndex + 1) * pixelSize
+              );
+              dstData.set(srcBuf, dstIndex * pixelSize);
             }
-
-            var srcBuf = srcData.subarray(
-              srcIndex * pixelSize, (srcIndex + 1) * pixelSize
-            );
-            dstData.set(srcBuf, dstIndex * pixelSize);
-
             srcIndex++;
             dstIndex++;
           }
@@ -63,10 +60,9 @@ module.exports = function(gr) {
     }
   }
 
-  function clip(x, y, width, height) {
-    var srcIndex  = 0;
-    var srcWidth  = width;
-    var srcHeight = height;
+  function clip(x, y, width, height, dstWidth, dstHeight) {
+    var srcIndex = 0;
+    var srcWidth = width;
 
     if (x < 0) {
       width += x;
@@ -79,8 +75,8 @@ module.exports = function(gr) {
       y = 0;
     }
 
-    width  = Math.min(srcWidth , width  - x);
-    height = Math.min(srcHeight, height - y);
+    width  = Math.min(width , dstWidth  - x);
+    height = Math.min(height, dstHeight - y);
 
     return { x: x, y: y, width: width, height: height, srcIndex: srcIndex };
   }
