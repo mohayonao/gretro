@@ -25,7 +25,7 @@ function fromTileItems(items, tilePalette) {
  */
 module.exports = function(color, tilePalette) {
   if (typeof color === "number") {
-    return color & 15;
+    return color === -1 ? -1 : color & 15;
   }
   if (Array.isArray(color)) {
     return fromTileItems(color, tilePalette);
@@ -35,5 +35,5 @@ module.exports = function(color, tilePalette) {
       valueOf: color
     };
   }
-  return 0;
+  return -1;
 };
