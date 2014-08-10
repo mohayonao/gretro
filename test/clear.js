@@ -5,15 +5,15 @@ var gretro = require("../");
 var $$ = 15;
 var __ =  0;
 
-describe("#clear", function() {
+describe("Canvas#clear", function() {
   var canvas = null;
 
   beforeEach(function() {
     canvas = new gretro.Canvas(8, 8);
   });
 
-  it("should fill the entire canvas", function() {
-    var result = canvas.clear($$);
+  it("should be able to fill the entire canvas", function() {
+    var result = canvas.fill($$).clear();
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       $$,$$,$$,$$,$$,$$,$$,$$,
@@ -24,6 +24,23 @@ describe("#clear", function() {
       $$,$$,$$,$$,$$,$$,$$,$$,
       $$,$$,$$,$$,$$,$$,$$,$$,
       $$,$$,$$,$$,$$,$$,$$,$$,
+    ]));
+
+    expect(result, "should return self").to.equal(canvas);
+  });
+
+  it("should NOT be able to fill the entire canvas when noFill", function() {
+    var result = canvas.noFill().clear();
+
+    expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
     ]));
 
     expect(result, "should return self").to.equal(canvas);

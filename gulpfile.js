@@ -9,22 +9,22 @@ var uglify    = require("gulp-uglify");
 var rename    = require("gulp-rename");
 
 gulp.task("lint", function() {
-  return gulp.src([ "gulpfile.js", "src/*.js", "examples/*.js" ])
+  return gulp.src([ "gulpfile.js", "src/**/*.js", "examples/*.js" ])
     .pipe(jshint(".jshintrc"))
     .pipe(jshint.reporter(require("jshint-stylish")))
     .pipe(jshint.reporter("fail"));
 });
 
 gulp.task("test", function() {
-  return gulp.src("test/*.js")
+  return gulp.src("test/**/*.js")
     .pipe(mocha());
 });
 
 gulp.task("cover", function(cb) {
-  gulp.src("src/*.js")
+  gulp.src("src/**/*.js")
     .pipe(istanbul())
     .on("finish", function() {
-      return gulp.src("test/*.js")
+      return gulp.src("test/**/*.js")
         .pipe(mocha())
         .pipe(istanbul.writeReports("coverage"))
         .on("end", cb);

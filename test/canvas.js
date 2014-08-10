@@ -22,81 +22,84 @@ describe("Canvas", function() {
     ]));
   });
 
-  describe("#getWidth", function() {
-    it("should return canvas width", function() {
-      var canvas = new gretro.Canvas(100, 1);
+  it("should return new canvas with given buffer", function() {
+    var buffer = new Uint8Array(64);
+    var canvas = new gretro.Canvas(8, 8, buffer);
 
-      expect(canvas.getWidth()).to.equal(100);
-    });
+    expect(canvas.getRawData()).to.equal(buffer);
   });
 
-  describe("#getHeight", function() {
-    it("should return canvas height", function() {
-      var canvas = new gretro.Canvas(1, 100);
+  it("should return new rgb-canvas with given buffer", function() {
+    var buffer = new Uint8Array(64 * 3);
+    var canvas = new gretro.Canvas(8, 8, buffer);
 
-      expect(canvas.getHeight()).to.equal(100);
-    });
+    expect(canvas.getRawData()).to.equal(buffer);
+    expect(canvas).to.be.an.instanceOf(gretro.CanvasRGB);
   });
 
-  describe("#setColor", function() {
-    it("should set RGB hex color code", function() {
-      var canvas = new gretro.Canvas(1, 1);
-      var result = canvas.setColor(1, 0x2ecc71);
+  it("should return new rgba-canvas with given buffer", function() {
+    var buffer = new Uint8Array(64 * 4);
+    var canvas = new gretro.Canvas(8, 8, buffer);
 
-      expect(result, "should return self").to.equal(canvas);
-      expect(canvas.getColor(1)).to.equal(0x22cc77);
-    });
+    expect(canvas.getRawData()).to.equal(buffer);
+    expect(canvas).to.be.an.instanceOf(gretro.CanvasRGBA);
   });
 
-  describe("#setTile", function() {
-    it("should set tile pattern code", function() {
-      var canvas = new gretro.Canvas(8, 8);
-      var result = canvas.setTile(1, 0xf0f0);
+});
 
-      expect(result, "should return self").to.equal(canvas);
-      expect(canvas.getTile(1)).to.equal(0xf0f0);
-    });
-    it("should not set tile pattern code if tileIndex is 0", function() {
-      var canvas = new gretro.Canvas(8, 8);
-      var result = canvas.setTile(0, 0xf0f0);
+describe("CanvasRGB", function() {
 
-      expect(result, "should return self").to.equal(canvas);
-      expect(canvas.getTile(0)).to.equal(0x0000);
-    });
+  it("should be inherited Canvas", function() {
+    var canvas = new gretro.CanvasRGB(8, 8);
+
+    expect(canvas).to.be.an.instanceOf(gretro.CanvasRGB);
+    expect(canvas).to.be.an.instanceOf(gretro.Canvas);
   });
 
-  describe("#clone", function() {
-    it("should return a clone", function() {
-      var canvas = new gretro.Canvas(8, 8);
+  it("should be able to directly draw", function() {
+    var buffer = new Uint8Array([
+      0x11, 0x22, 0x33, 0x44, 0x55, 0x66,
+      0x77, 0x88, 0x99, 0xaa, 0xbb, 0xcc,
+    ]);
+    var canvas = new gretro.CanvasRGB(2, 2, buffer);
 
-      canvas.setColor(2, 0x123456);
-      canvas.circle(4, 4, 3, 2);
+    canvas.fill(function(x, y) {
+      return x === y ? 1 : -1;
+    }).clear();
 
-      var cloned = canvas.clone();
-
-      expect(canvas).to.not.equal(cloned);
-      expect(cloned.toRGB()).to.eql(canvas.toRGB());
-    });
+    expect(buffer).to.eql(new Uint8Array([
+      0x00, 0x00, 0x77, 0x44, 0x55, 0x66,
+      0x77, 0x88, 0x99, 0x00, 0x00, 0x77,
+    ]));
   });
 
-  describe("error case", function() {
-    it("should replace 0 if got an invalid argument", function() {
-      var canvas = new gretro.Canvas(8, 8);
+});
 
-      canvas.clear($$);
-      canvas.clear("blue");
+describe("CanvasRGBA", function() {
 
-      expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-        __,__,__,__,__,__,__,__,
-      ]));
-    });
+  it("should be inherited CanvasRGB", function() {
+    var canvas = new gretro.CanvasRGBA(8, 8);
+
+    expect(canvas).to.be.an.instanceOf(gretro.CanvasRGBA);
+    expect(canvas).to.be.an.instanceOf(gretro.CanvasRGB);
+    expect(canvas).to.be.an.instanceOf(gretro.Canvas);
+  });
+
+  it("should be able to directly draw", function() {
+    var buffer = new Uint8Array([
+      0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88,
+      0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff, 0x00,
+    ]);
+    var canvas = new gretro.CanvasRGBA(2, 2, buffer);
+
+    canvas.fill(function(x, y) {
+      return x === y ? 1 : -1;
+    }).clear();
+
+    expect(buffer).to.eql(new Uint8Array([
+      0x00, 0x00, 0x77, 0x44, 0x55, 0x66, 0x77, 0x88,
+      0x99, 0xaa, 0xbb, 0xcc, 0x00, 0x00, 0x77, 0x00,
+    ]));
   });
 
 });

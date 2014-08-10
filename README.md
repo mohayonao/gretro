@@ -35,9 +35,8 @@ for (var i = 0; i < 10000; i++) {
   var x = Math.random() * 640;
   var y = Math.random() * 400;
   var color = Math.random() * 16;
-  canvas.dot(x, y, color);
+  canvas.stroke(color).dot(x, y);
 }
-
 ```
 
 ### Rendering
@@ -71,41 +70,41 @@ fs.writeFileSync("./image.png", png_image.toString("binary"), "binary");
 ### Canvas
 
 #### Constructor
-  - new Canvas(width:int = 640, height:int = 400) : Canvas
+  - new Canvas(width:int = 640, height:int = 400, buffer=Uint8Array) : Canvas
 
 #### Instance methods
 
   - getWidth() : int
   - getHeight() : int
+  - getRawData() : Uint8Array
   - getColor(index:int) : int
   - setColor(index:int, rgb:int) : Canvas
   - getTile(index:int) : int
   - setTile(index:int, pattern:int) : Canvas
-  - clear(color:[int|array] = 0) : Canvas
-  - dot(x:int, y:int, color:[int|array]) : Canvas
-  - line(x1:int, y1:int, x2:int, y2:int, color:[int|array]) : Canvas
-  - rect(x:int, y:int, width:int, height:int, color:[int|array], filled:boolean = false) : Canvas
-  - circle(cx:int, cy:int, r:int, color:[int|array], filled:boolean = false) : Canvas
-  - ellipse(cx:int, cy:int, rx:int, ry:int, color:[int|array], filled:boolean = false) : Canvas
-  - paint(x:int, y:int, color:[int|array], filled:boolean = false) : Canvas
-  - char(char:int, x:int, y:int, color:[int|array]) : Canvas
-  - text(text:string, x:int, y:int, color:[int|array]) : Canvas
-  - plotter(x:int, y:int, color:[int|array]) : Plotter
+  - stroke(color:color) : Canvas
+  - noStroke() : Canvas
+  - fill(color:color) : Canvas
+  - noFill(color:color) : Canvas
+  - mask(mask:[Uint8Array|Canvas]) : Canvas
+  - unmask() : Canvas
+  - clear() : Canvas
+  - dot(x:int, y:int) : Canvas
+  - line(x1:int, y1:int, x2:int, y2:int) : Canvas
+  - rect(x:int, y:int, width:int, height:int) : Canvas
+  - circle(cx:int, cy:int, r:int) : Canvas
+  - ellipse(cx:int, cy:int, rx:int, ry:int) : Canvas
+  - polygon(vtx:array) : Canvas
+  - char(char:int, x:int, y:int) : Canvas
+  - text(text:string, x:int, y:int) : Canvas
+  - paint(x:int, y:int) : Canvas
+  - copy(x1:int, y1:int, x2:int, y2:int) : Canvas
+  - paste(cnv:Canvas, x:int, y:int) : Canvas
   - clone() : Canvas
+  - toMask() : Uint8Array
   - toRGB() : Uint8Array
   - toRGBA(alpha:int = 255) : Uint8Array
   - toIndexedColor() : Uint8Array
-
-### Plotter
-
-#### Instance methods
-
-  - getX() : int
-  - getY() : int
-  - moveTo(x:int, y:int) : Plotter
-  - lineTo(x:int, y:int) : Plotter
-  - moveToRel(x:int, y:int) : Plotter
-  - lineToRel(x:int, y:int) : Plotter
+  - draw(fn:function) : Canvas
 
 ## Color
 
@@ -121,6 +120,14 @@ You can use 16 colors on a canvas. It is possible to select from 4096 colors.
 canvas.setColor(1, 0x006655);
 ```
 
+### color generator
+
+```javascript
+canvas.fill(function(x, y) {
+  return 16 * Math.random();
+}).circle(100, 100, 50);
+```
+
 ## Tile
 
 A tile is a 4 x 4 dot pattern with 2 colors that is used to express gradation in generally.
@@ -130,7 +137,7 @@ A tile is a 4 x 4 dot pattern with 2 colors that is used to express gradation in
 Set array that contains color1, color2 and tile-index instead of a color number.
 
 ```javascript
-canvas.circle(100, 100, 50, [ color1, color2, tileIndex ]);
+canvas.fill([ color1, color2, tileIndex ]).circle(100, 100, 50);
 ```
 
 ### default tile palette
