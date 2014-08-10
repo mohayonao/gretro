@@ -25,9 +25,16 @@ module.exports = function(gr, _) {
     var $ = dollar(width, height, 1, buffer);
 
     $.putPixel = function(x, y, color) {
+      var index = y * width + x;
+
+      if ($.mask && $.mask[index] === 0) {
+        return;
+      }
+
       var colorIndex = color.valueOf(x, y);
+
       if (colorIndex !== -1) {
-        $.data[y * width + x] = colorIndex & 15;
+        $.data[index] = colorIndex & 15;
       }
     };
 
@@ -49,12 +56,19 @@ module.exports = function(gr, _) {
     var $ = dollar(width, height, 3, buffer);
 
     $.putPixel = function(x, y, color) {
+      var index = y * width + x;
+
+      if ($.mask && $.mask[index] === 0) {
+        return;
+      }
+
       var colorIndex = color.valueOf(x, y);
+
       if (colorIndex !== -1) {
         var paletteIndex = colorIndex * 3;
         var colorPalette = $.colorPalette;
-        var index = (y * width + x) * 3;
 
+        index *= 3;
         $.data[index    ] = colorPalette[paletteIndex    ];
         $.data[index + 1] = colorPalette[paletteIndex + 1];
         $.data[index + 2] = colorPalette[paletteIndex + 2];
@@ -72,12 +86,19 @@ module.exports = function(gr, _) {
     var $ = dollar(width, height, 4, buffer);
 
     $.putPixel = function(x, y, color) {
+      var index = y * width + x;
+
+      if ($.mask && $.mask[index] === 0) {
+        return;
+      }
+
       var colorIndex = color.valueOf(x, y);
+
       if (colorIndex !== -1) {
         var paletteIndex = colorIndex * 3;
         var colorPalette = $.colorPalette;
-        var index = (y * width + x) * 4;
 
+        index *= 4;
         $.data[index    ] = colorPalette[paletteIndex    ];
         $.data[index + 1] = colorPalette[paletteIndex + 1];
         $.data[index + 2] = colorPalette[paletteIndex + 2];

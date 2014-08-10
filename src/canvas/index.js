@@ -16,6 +16,8 @@ module.exports = function(gr) {
   gr.use(require("./noStroke"));
   gr.use(require("./fill"));
   gr.use(require("./noFill"));
+  gr.use(require("./mask"));
+  gr.use(require("./unmask"));
   gr.use(require("./clear"));
   gr.use(require("./draw"));
   gr.use(require("./dot"));
@@ -30,6 +32,7 @@ module.exports = function(gr) {
   gr.use(require("./copy"));
   gr.use(require("./paste"));
   gr.use(require("./clone"));
+  gr.use(require("./toMask"));
   gr.use(require("./toIndexedColor"));
   gr.use(require("./toRGB"));
   gr.use(require("./toRGBA"));
