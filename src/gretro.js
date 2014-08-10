@@ -3,7 +3,7 @@
 var util = require("./utils");
 var used = [];
 
-exports.version = "0.1.2a";
+exports.version = "0.2.0";
 
 exports.use = function(fn) {
   /* istanbul ignore else */
