@@ -9,5 +9,5 @@
  * @param {number} rgb
  */
 module.exports = function(r, g, b) {
-  return r + (g << 8) + (b << 16);
+  return (r << 16) + (g << 8) + b;
 };
