@@ -18,6 +18,6 @@ module.exports = function(gr) {
     this.$.minX = Math.max(0, Math.min(x1, x2));
     this.$.minY = Math.max(0, Math.min(y1, y2));
     this.$.maxX = Math.min(Math.max(x1, x2) - 1, this.$.width  - 1);
-    this.$.maxY = Math.min(Math.max(x1, x2) - 1, this.$.height - 1);
+    this.$.maxY = Math.min(Math.max(y1, y2) - 1, this.$.height - 1);
   });
 };
