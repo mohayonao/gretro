@@ -7,11 +7,11 @@
 
 > **Gretro** (grétrou, グレトロ) is a JavaScript Graphic library for vintage CG.
 
-![splash](http://the.mohayonao.com/gretro/github-contents/splash.png)
+![](http://the.mohayonao.com/gretro/github-contents/splash.png)
 
 ## Install
 
-browser
+##### browser
 
   - [gretro.js](http://the.mohayonao.com/gretro/github-contents/gretro.js)
   - [gretro.min.js](http://the.mohayonao.com/gretro/github-contents/gretro.min.js)
@@ -20,7 +20,7 @@ browser
 <script src="/path/to/gretro.js"></script>
 ```
 
-node.js
+##### node.js
 
 ```sh
 % npm install gretro
@@ -29,19 +29,21 @@ node.js
 ## Usage
 
 ```javascript
-var canvas = new gretro.Canvas(640, 400);
+var canvas = new gretro.Canvas(220, 110);
 
-for (var i = 0; i < 10000; i++) {
-  var x = Math.random() * 640;
-  var y = Math.random() * 400;
-  var color = Math.random() * 16;
-  canvas.stroke(color).point(x, y);
-}
+canvas
+  .stroke(13).circle( 40, 40, 30)
+  .stroke( 7).circle(110, 40, 30)
+  .stroke(10).circle(180, 40, 30)
+  .stroke(14).circle( 75, 70, 30)
+  .stroke(12).circle(145, 70, 30);
 ```
+
+![](http://the.mohayonao.com/gretro/github-contents/readme-usage.png)
 
 ### Rendering
 
-browser
+##### browser
 
 ```javascript
 var canvas = document.getElementById("canvas");
@@ -53,7 +55,21 @@ imageData.data.set(gretroCanvas.toRGBA());
 context.putImageData(imageData, 0, 0);
 ```
 
-node.js
+draw directly to the html-canvas
+
+```javascript
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
+var imageData = htmlCanvasContext.getImageData(0, 0, 640, 400);
+
+var gretroCanvas = new gretro.Canvas(640, 400, imageData.data);
+
+gretroCanvas.draw(fn);
+
+htmlCanvasContext.putImageData(imageData, 0, 0);
+```
+
+##### node.js
 
 ```javascript
 var Png = require("png").Png;
@@ -70,43 +86,59 @@ fs.writeFileSync("./image.png", png_image.toString("binary"), "binary");
 ### Canvas
 
 #### Constructor
-  - new Canvas(width:int = 640, height:int = 400, buffer=Uint8Array) : Canvas
+  - `new Canvas(width:int = 640, height:int = 400, buffer=Uint8Array) : Canvas`
 
 #### Instance methods
 
-  - [`getWidth() : int`](https://github.com/mohayonao/gretro/wiki/Canvas-getWidth)
-  - [`getHeight() : int`](https://github.com/mohayonao/gretro/wiki/Canvas-getHeight)
-  - [`getRawData() : Uint8Array`](https://github.com/mohayonao/gretro/wiki/Canvas-getRawData)
-  - [`getColor(index:int) : int`](https://github.com/mohayonao/gretro/wiki/Canvas-getColor)
-  - [`setColor(index:int, rgb:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-setColor)
-  - [`getTile(index:int) : int`](https://github.com/mohayonao/gretro/wiki/Canvas-getTile)
-  - [`setTile(index:int, pattern:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-setTile)
-  - [`stroke(color:color) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-stroke)
-  - [`noStroke() : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-noStroke)
-  - [`fill(color:color) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-fill)
-  - [`noFill(color:color) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-noFill)
-  - [`clip(x1:int, y1:int, x2:int, y2:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-clip)
-  - [`noClip() : Canvas`](https://github.ccom/mohayonao/gretro/wiki/Canvas-noClip)
-  - [`mask(mask:[Uint8Array|Canvas]) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-mask)
-  - [`noMask() : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-noMask)
-  - [`clear() : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-clear)
-  - [`point(x:int, y:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-point)
-  - [`line(x1:int, y1:int, x2:int, y2:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-line)
-  - [`rect(x:int, y:int, width:int, height:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-rect)
-  - [`arc(cx:int, cy:int, rx:int, ry:int, start:int, stop:int, mode:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-arc)
-  - [`circle(cx:int, cy:int, r:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-circle)
-  - [`ellipse(cx:int, cy:int, rx:int, ry:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-ellipse)
-  - [`triangle(x1:int, y1:int, x2:int, y2:int, x3:int, y3:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-triangle)
-  - [`quad(x1:int, y1:int, x2:int, y2:int, x3:int, y3:int, x4:int, y4:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-quad)
-  - [`polygon(vtx:array) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-polygon)
-  - [`copy(x1:int, y1:int, x2:int, y2:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-copy)
-  - [`paste(cnv:Canvas, x:int, y:int) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-paste)
-  - [`clone() : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-clone)
-  - [`toMask() : Uint8Array`](https://github.com/mohayonao/gretro/wiki/Canvas-toMask)
-  - [`toRGB() : Uint8Array`](https://github.com/mohayonao/gretro/wiki/Canvas-toRGB)
-  - [`toRGBA(alpha:int = 255) : Uint8Array`](https://github.com/mohayonao/gretro/wiki/Canvas-toRGBA)
-  - [`toIndexedColor() : Uint8Array`](https://github.com/mohayonao/gretro/wiki/Canvas-toIndexedColor)
-  - [`draw(fn:function) : Canvas`](https://github.com/mohayonao/gretro/wiki/Canvas-draw)
+###### Environment
+  - [`getWidth()`](https://github.com/mohayonao/gretro/wiki/Canvas-getWidth)
+  - [`getHeight()`](https://github.com/mohayonao/gretro/wiki/Canvas-getHeight)
+  - [`getRawData()`](https://github.com/mohayonao/gretro/wiki/Canvas-getRawData)
+
+###### Setting
+  - [`getColor()`](https://github.com/mohayonao/gretro/wiki/Canvas-getColor)
+  - [`setColor()`](https://github.com/mohayonao/gretro/wiki/Canvas-setColor)
+  - [`getTile()`](https://github.com/mohayonao/gretro/wiki/Canvas-getTile)
+  - [`setTile()`](https://github.com/mohayonao/gretro/wiki/Canvas-setTile)
+
+###### Color
+  - [`fill()`](https://github.com/mohayonao/gretro/wiki/Canvas-fill)
+  - [`noFill()`](https://github.com/mohayonao/gretro/wiki/Canvas-noFill)
+  - [`stroke()`](https://github.com/mohayonao/gretro/wiki/Canvas-stroke)
+  - [`noStroke()`](https://github.com/mohayonao/gretro/wiki/Canvas-noStroke)
+
+###### Region
+  - [`clear()`](https://github.com/mohayonao/gretro/wiki/Canvas-clear)
+  - [`clip()`](https://github.com/mohayonao/gretro/wiki/Canvas-clip)
+  - [`noClip()`](https://github.ccom/mohayonao/gretro/wiki/Canvas-noClip)
+  - [`mask()`](https://github.com/mohayonao/gretro/wiki/Canvas-mask)
+  - [`noMask()`](https://github.com/mohayonao/gretro/wiki/Canvas-noMask)
+
+###### Shape
+  - [`arc()`](https://github.com/mohayonao/gretro/wiki/Canvas-arc)
+  - [`circle()`](https://github.com/mohayonao/gretro/wiki/Canvas-circle)
+  - [`ellipse()`](https://github.com/mohayonao/gretro/wiki/Canvas-ellipse)
+  - [`line()`](https://github.com/mohayonao/gretro/wiki/Canvas-line)
+  - [`point()`](https://github.com/mohayonao/gretro/wiki/Canvas-point)
+  - [`polygon()`](https://github.com/mohayonao/gretro/wiki/Canvas-polygon)
+  - [`quad()`](https://github.com/mohayonao/gretro/wiki/Canvas-quad)
+  - [`rect()`](https://github.com/mohayonao/gretro/wiki/Canvas-rect)
+  - [`triangle()`](https://github.com/mohayonao/gretro/wiki/Canvas-triangle)
+
+###### Image
+  - [`clone()`](https://github.com/mohayonao/gretro/wiki/Canvas-clone)
+  - [`copy()`](https://github.com/mohayonao/gretro/wiki/Canvas-copy)
+  - [`paste()`](https://github.com/mohayonao/gretro/wiki/Canvas-paste)
+
+###### Output
+  - [`toMask()`](https://github.com/mohayonao/gretro/wiki/Canvas-toMask)
+  - [`toRGB()`](https://github.com/mohayonao/gretro/wiki/Canvas-toRGB)
+  - [`toRGBA()`](https://github.com/mohayonao/gretro/wiki/Canvas-toRGBA)
+  - [`toIndexedColor()`](https://github.com/mohayonao/gretro/wiki/Canvas-toIndexedColor)
+
+###### Utility
+  - [`draw()`](https://github.com/mohayonao/gretro/wiki/Canvas-draw)
+
 
 ## Color
 
@@ -148,7 +180,7 @@ canvas.fill([ color1, color2, tileIndex ]).circle(100, 100, 50);
 
 ### custom tile
 
-Index 16-31 are able to use for custom tile.
+TileIndex 16-31 are customizable.
 
 ```javascript
 canvas.setTile(16, 0x22f2);
