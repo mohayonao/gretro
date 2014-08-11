@@ -46,6 +46,8 @@ canvas
 ##### browser
 
 ```javascript
+var gretroCanvas = new gretro.Canvas(640, 400).draw(fn);
+
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
 var imageData = context.createImageData(640, 400);
@@ -60,13 +62,11 @@ draw directly to the html-canvas
 ```javascript
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
-var imageData = htmlCanvasContext.getImageData(0, 0, 640, 400);
+var imageData = context.getImageData(0, 0, 640, 400);
 
-var gretroCanvas = new gretro.Canvas(640, 400, imageData.data);
+new gretro.Canvas(640, 400, imageData.data).draw(fn);
 
-gretroCanvas.draw(fn);
-
-htmlCanvasContext.putImageData(imageData, 0, 0);
+context.putImageData(imageData, 0, 0);
 ```
 
 ##### node.js
