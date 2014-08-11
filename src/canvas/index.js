@@ -23,6 +23,7 @@ module.exports = function(gr) {
   gr.use(require("./point"));
   gr.use(require("./line"));
   gr.use(require("./polygon"));
+  gr.use(require("./triangle"));
   gr.use(require("./rect"));
   gr.use(require("./circle"));
   gr.use(require("./ellipse"));
