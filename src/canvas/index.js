@@ -26,9 +26,6 @@ module.exports = function(gr) {
   gr.use(require("./rect"));
   gr.use(require("./circle"));
   gr.use(require("./ellipse"));
-  gr.use(require("./char"));
-  gr.use(require("./text"));
-  gr.use(require("./paint"));
   gr.use(require("./copy"));
   gr.use(require("./paste"));
   gr.use(require("./clone"));
