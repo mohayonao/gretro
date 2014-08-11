@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(gr) {
+module.exports = function(gr, _) {
   /**
    * setTile
    *
@@ -8,10 +8,10 @@ module.exports = function(gr) {
    * @param {int} pattern
    */
   gr.Canvas.addMethod("setTile", function(index, pattern) {
-    index   = index   & 15;
+    index   = index   & 31;
     pattern = pattern & 0xffff;
 
-    if (index !== 0) {
+    if (!_.inRange(index, 0, 15)) {
       this.$.tilePalette[index] = pattern;
     }
   });

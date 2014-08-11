@@ -4,11 +4,12 @@ var Png = require("png").Png;
 var fs  = require("fs");
 
 var gretro = require("../");
+var gretroText = require("gretro-text");
+
+gretro.use(gretroText);
 
 var WIDTH  = 640;
 var HEIGHT = 400;
-
-var canvas = new gretro.Canvas(WIDTH, HEIGHT);
 
 var linexp = function(num, inMin, inMax, outMin, outMax) {
   return Math.pow(outMax / outMin, (num - inMin) / (inMax - inMin)) * outMin;
@@ -95,7 +96,7 @@ var star = function(n) {
     var x = Math.random() * WIDTH;
     var y = Math.random() * HEIGHT;
     var c = Math.random() * 14;
-    this.stroke(c).dot(x, y);
+    this.stroke(c).point(x, y);
   }
 };
 
@@ -154,6 +155,8 @@ var credit = function() {
     .text("JAVASCRIPT GRAPHIC LIBRARY for VINTAGE CG / 2014 (C) MOHAYONAO", 10, 386);
 };
 
+var canvas = new gretro.Canvas(WIDTH, HEIGHT);
+
 canvas
   .setColor(2, 0xec6800)
   .setColor(3, 0xb7282e)
@@ -173,4 +176,4 @@ canvas
 var png = new Png(new Buffer(canvas.toRGB()), WIDTH, HEIGHT, "rgb");
 var png_image = png.encodeSync();
 
-fs.writeFileSync("./splash.png", png_image.toString("binary"), "binary");
+fs.writeFileSync(__dirname + "/splash.png", png_image.toString("binary"), "binary");

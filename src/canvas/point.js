@@ -2,17 +2,19 @@
 
 module.exports = function(gr, _) {
   /**
-   * dot
+   * point
    *
    * @param {int} x
    * @param {int} y
    */
-  gr.Canvas.addMethod("dot", function(x, y) {
+  gr.Canvas.addMethod("point", function(x, y) {
     x = x|0;
     y = y|0;
 
     _.stroke(this, function(color) {
-      _.putPixel(this, x|0, y|0, color);
+      if (_.inClip(this, x, y)) {
+        _.putPixel(this, x, y, color);
+      }
     });
   });
 };

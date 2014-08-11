@@ -7,10 +7,10 @@ describe("Canvas#toIndexedColor", function() {
   it("should return Uint8Array contains index color", function() {
     var canvas = new gretro.Canvas(1, 4);
 
-    canvas.stroke(1).dot(0, 0);
-    canvas.stroke(2).dot(0, 1);
-    canvas.stroke(3).dot(0, 2);
-    canvas.stroke(4).dot(0, 3);
+    canvas.stroke(1).point(0, 0);
+    canvas.stroke(2).point(0, 1);
+    canvas.stroke(3).point(0, 2);
+    canvas.stroke(4).point(0, 3);
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       1,

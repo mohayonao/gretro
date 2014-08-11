@@ -8,6 +8,6 @@ module.exports = function(gr) {
    * @return {int} tile pattern
    */
   gr.Canvas.addMethod("getTile", function(index) {
-    return this.$.tilePalette[index & 15];
+    return this.$.tilePalette[index & 31];
   });
 };
