@@ -26,6 +26,7 @@ module.exports = function(gr) {
   gr.use(require("./triangle"));
   gr.use(require("./quad"));
   gr.use(require("./rect"));
+  gr.use(require("./arc"));
   gr.use(require("./circle"));
   gr.use(require("./ellipse"));
   gr.use(require("./copy"));
