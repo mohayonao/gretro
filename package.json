@@ -1,7 +1,7 @@
 {
   "name": "gretro",
   "description": "Gretro is a JavaScript Graphic library for vintage CG",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -14,6 +14,9 @@
     "retro"
   ],
   "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {},
   "devDependencies": {
     "chai": "^1.9.1",
