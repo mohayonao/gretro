@@ -24,7 +24,8 @@ module.exports = function(gr, _) {
   var Y0 = 1;
   var Y1 = 2;
   var A  = 3;
-  var V  = 4;
+  var D  = 4;
+  var ID = 5;
 
   function eq(pt1, pt2) {
     return pt1[X] === pt2[X] && pt1[Y] === pt2[Y];
@@ -84,6 +85,7 @@ module.exports = function(gr, _) {
     }
 
     var vtxLength = vtx.length;
+    var id = 1;
 
     for (var i = 0; i < vtxLength; i++) {
       var pt1 = vtx[i].slice();
@@ -98,7 +100,8 @@ module.exports = function(gr, _) {
         0,
         0,
         angle(pt1, pt2),
-        pt1[Y] < pt2[Y] ? +1 : -1
+        pt1[Y] < pt2[Y] ? +1 : -1,
+        id++
       ];
 
       edge[Y0] = Math.min(pt1[Y], pt2[Y]);
@@ -120,8 +123,18 @@ module.exports = function(gr, _) {
     return a[X] - b[X];
   }
 
-  function removeIfSameVectorContinue(_, i, list) {
-    return i === 0 || list[i][V] !== list[i - 1][V];
+  function isSameDirection(e1, e2) {
+    return e1[D] === e2[D];
+  }
+
+  function isAdjacent(e1, e2, len) {
+    return Math.abs((e1[ID] % len) - e2[ID]) === 1;
+  }
+
+  function removeIfAdjacentSameDirection(_, i, list) {
+    return i === 0 ||
+      !isSameDirection(list[i], list[i - 1]) ||
+      !isAdjacent(list[i], list[i - 1], list.length);
   }
 
   function fetchX(edge) {
@@ -144,7 +157,7 @@ module.exports = function(gr, _) {
     for (var y = minY; y <= maxY; y++) {
       var scanned = edgeList.filter(inScanLine(y));
       var sortedX = scanned.sort(sortByX)
-        .filter(removeIfSameVectorContinue)
+        .filter(removeIfAdjacentSameDirection)
         .map(fetchX);
 
       for (var i = 1, imax = sortedX.length; i < imax; i += 2) {
