@@ -29,6 +29,23 @@ describe("Canvas#point", function() {
     expect(result, "should return self").to.equal(canvas);
   });
 
+  it("should NOT be able to stroke a single point outside", function() {
+    var result = canvas.stroke($$).noFill().point(10, 2);
+
+    expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+      __,__,__,__,__,__,__,__,
+    ]));
+
+    expect(result, "should return self").to.equal(canvas);
+  });
+
   it("should NOT be able to fill a single point", function() {
     var result = canvas.noStroke().fill($$).point(2, 2);
 

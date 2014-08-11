@@ -12,7 +12,9 @@ module.exports = function(gr, _) {
     y = y|0;
 
     _.stroke(this, function(color) {
-      _.putPixel(this, x, y, color);
+      if (_.inClip(this, x, y)) {
+        _.putPixel(this, x, y, color);
+      }
     });
   });
 };
