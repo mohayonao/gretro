@@ -22,7 +22,7 @@ describe("Canvas#copy", function() {
     canvas = new gretro.Canvas(8, 8);
     canvas.stroke($$);
     canvas.circle(3, 3, 3);
-    canvas.dot(0, 0);
+    canvas.point(0, 0);
   });
 
   it("should return new canvas", function() {

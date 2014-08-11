@@ -5,7 +5,7 @@ var gretro = require("../");
 var $$ = 15;
 var __ =  0;
 
-describe("Canvas#dot", function() {
+describe("Canvas#point", function() {
   var canvas = null;
 
   beforeEach(function() {
@@ -13,7 +13,7 @@ describe("Canvas#dot", function() {
   });
 
   it("should be able to stroke a single point", function() {
-    var result = canvas.stroke($$).noFill().dot(2, 2);
+    var result = canvas.stroke($$).noFill().point(2, 2);
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       __,__,__,__,__,__,__,__,
@@ -30,7 +30,7 @@ describe("Canvas#dot", function() {
   });
 
   it("should NOT be able to fill a single point", function() {
-    var result = canvas.noStroke().fill($$).dot(2, 2);
+    var result = canvas.noStroke().fill($$).point(2, 2);
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       __,__,__,__,__,__,__,__,

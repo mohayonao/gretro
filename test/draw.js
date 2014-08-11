@@ -17,10 +17,10 @@ describe("Canvas#draw", function() {
     canvas.stroke($$).noFill();
 
     var result = canvas.draw(function() {
-      canvas.stroke(ll).dot(2, 2);
+      canvas.stroke(ll).point(2, 2);
     });
 
-    canvas.dot(5, 5);
+    canvas.point(5, 5);
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       __,__,__,__,__,__,__,__,

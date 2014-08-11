@@ -2,9 +2,9 @@
 
 module.exports = function(gr) {
   /**
-   *  unmask
+   *  noMask
    */
-  gr.Canvas.addMethod("unmask", function() {
+  gr.Canvas.addMethod("noMask", function() {
     this.$.mask = null;
   });
 };

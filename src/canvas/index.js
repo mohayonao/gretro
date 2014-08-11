@@ -17,10 +17,10 @@ module.exports = function(gr) {
   gr.use(require("./fill"));
   gr.use(require("./noFill"));
   gr.use(require("./mask"));
-  gr.use(require("./unmask"));
+  gr.use(require("./noMask"));
   gr.use(require("./clear"));
   gr.use(require("./draw"));
-  gr.use(require("./dot"));
+  gr.use(require("./point"));
   gr.use(require("./line"));
   gr.use(require("./polygon"));
   gr.use(require("./rect"));

@@ -47,7 +47,7 @@ describe("mask", function() {
       0, 0, 0, 0, 0, 0, 0, 0,
       1, 1, 1, 1, 1, 1, 1, 1,
       0, 0, 0, 0, 0, 0, 0, 0,
-    ]).unmask().noStroke().fill($$).circle(3, 3, 3);
+    ]).noMask().noStroke().fill($$).circle(3, 3, 3);
 
     expect(canvas.toIndexedColor()).to.eql(new Uint8Array([
       __,__,$$,$$,$$,__,__,__,

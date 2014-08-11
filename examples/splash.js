@@ -96,7 +96,7 @@ var star = function(n) {
     var x = Math.random() * WIDTH;
     var y = Math.random() * HEIGHT;
     var c = Math.random() * 14;
-    this.stroke(c).dot(x, y);
+    this.stroke(c).point(x, y);
   }
 };
 
