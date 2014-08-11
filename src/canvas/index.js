@@ -16,6 +16,8 @@ module.exports = function(gr) {
   gr.use(require("./noStroke"));
   gr.use(require("./fill"));
   gr.use(require("./noFill"));
+  gr.use(require("./clip"));
+  gr.use(require("./noClip"));
   gr.use(require("./mask"));
   gr.use(require("./noMask"));
   gr.use(require("./clear"));
