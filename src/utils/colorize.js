@@ -3,7 +3,7 @@
 function fromTileItems(items, tilePalette) {
   var color1 = items[0] & 15;
   var color2 = items[1] & 15;
-  var tileIndex = items[2] & 15;
+  var tileIndex = items[2] & 31;
   var tile = tilePalette[tileIndex];
 
   if (color1 === color2 || tileIndex === 0) {
