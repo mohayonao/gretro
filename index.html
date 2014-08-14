@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head style="height:100%">
+    <meta charset="utf-8">
+    <title>gretro - JavaScript graphic library for retro CG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/theme/monokai.css">
+    <style type="text/css">
+      body {
+        background: #ecf0f1
+      }
+      #canvas-editor {
+        position: relative;
+        width: 640px;
+        height: 400px;
+      }
+      #canvas {
+        position: absolute;
+        width: 640px;
+        height: 400px;
+      }
+      #editor {
+        position: absolute;
+        width: 640px;
+        height: 400px;
+        opacity: 0.8;
+      }
+      input[type="range"] {
+        width: 640px;
+      }
+      .CodeMirror {
+        width: 640px;
+        height: 400px;
+        font-weight: 900;
+      }
+      .shortcuts strong {
+        display: inline-block;
+        width: 90px;
+      }
+    </style>
+  </head>
+  <body style="height:100%">
+    <div class="container">
+      <h1>gretro</h1>
+      <p>Gretro is a JavaScript graphic library for retro CG</p>
+      <div id="app">
+        <div class="row">
+          <div class="col-md-9">
+            <div id="canvas-editor">
+              <canvas id="canvas"></canvas>
+              <div id="editor" v-style="opacity: opacity"></div>
+            </div>
+            <input type="range" min="0" max="1.0" step="0.01" v-model="opacity">
+            <div>
+              <button class="btn btn-default" v-on="click:draw">Draw</button>
+              <button class="btn btn-default" v-on="click:clear">Clear</button>
+              <b></b>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <h4>Shortcuts</h4>
+            <ul class="shortcuts">
+              <li><strong>Ctrl + Enter</strong> Draw</li>
+              <li><strong>Ctrl + .</strong> Clear</li>
+            </ul>
+            <h4>Examples</h4>
+            <ul>
+              <li v-repeat="examples" v-on="click:src(source)"><a href="javascript:void(0)">{{ title }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/0.10.5/vue.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/codemirror.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/4.4.0/mode/javascript/javascript.js"></script>
+    <script src="build/gretro.min.js"></script>
+    <script src="https://cdn.rawgit.com/mohayonao/gretro-text/master/gretro-text.js"></script>
+    <script src="https://cdn.rawgit.com/mohayonao/gretro-paint/master/gretro-paint.js"></script>
+    <script>
+    var canvas = null;
+    var WIDTH  = 640;
+    var HEIGHT = 400;
+    $(function() {
+      "use strict";
+
+      canvas = new gretro.Canvas(WIDTH, HEIGHT);
+
+      var htmlCanvas = document.getElementById("canvas");
+      htmlCanvas.width  = WIDTH;
+      htmlCanvas.height = HEIGHT;
+
+      var context = htmlCanvas.getContext("2d");
+
+      var editor = CodeMirror(document.getElementById("editor"), {
+        value: "canvas\n  .stroke(15).fill(10).circle(320, 200, 150);",
+        mode: "javascript",
+        theme: "monokai",
+        lineNumbers: true,
+      });
+
+      editor.on("keydown", function(cm, e) {
+        if (!e.ctrlKey) {
+          return;
+        }
+        if (e.keyCode === 13) {
+          return draw();
+        }
+        if (e.keyCode === 190) {
+          return clear();
+        }
+      });
+
+      var vue = new Vue({
+        el: "#app",
+        data: {
+          opacity: "0.8",
+          examples: []
+        },
+        methods: {
+          draw: draw,
+          clear: clear,
+          src: function(src) {
+            editor.setValue(src);
+          }
+        }
+      });
+
+      function draw() {
+        eval.call(null, editor.getValue());
+        update();
+      }
+
+      function clear() {
+        canvas = new gretro.Canvas(WIDTH, HEIGHT);
+        update();
+      }
+
+      function update() {
+        var imageData = context.createImageData(WIDTH, HEIGHT);
+
+        imageData.data.set(canvas.toRGBA());
+
+        context.putImageData(imageData, 0, 0);
+      }
+
+      function readFromGist(gistid, callback) {
+        var url = "https://api.github.com/gists/" + gistid;
+        $.ajax({ url: url, type: "GET", dataType: "jsonp" }).then(function(result) {
+          if (result.data.files) {
+            callback(result.data.files);
+          } else {
+            console.warn("gist:" + gistid + " not found");
+          }
+        });
+      }
+
+      function updateExamples(gistid) {
+        readFromGist(gistid, function(files) {
+          vue.examples = _.chain(files).filter(function(file) {
+            return /^gr-(.+)\.js$/.test(file.filename);
+          }).map(function(file) {
+            return {
+              title: file.filename.match(/^gr-(.+)\.js$/)[0],
+              source: file.content
+            };
+          }).value();
+        });
+      }
+
+      window.onhashchange = function() {
+        var matched = /^#gistid:([a-f\d]+)$/.exec(location.hash);
+        if (matched) {
+          updateExamples(matched[1]);
+        }
+      };
+
+      if (location.hash) {
+        window.onhashchange();
+      } else {
+        updateExamples("a4795639af029f2661a5");
+      }
+
+      update();
+    });
+    </script>
+  </body>
+</html>
