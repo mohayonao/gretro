@@ -16,12 +16,16 @@
   - drawing in pixels, no anti aliasing
   - plugin architecture for extending gretro.Canvas
 
+## Online Playground
+
+  - http://mohayonao.github.io/gretro/
+
 ## Install
 
 ##### browser
 
-  - [gretro.js](https://github.com/mohayonao/gretro/wiki/build/gretro.js)
-  - [gretro.min.js](https://github.com/mohayonao/gretro/wiki/build/gretro.min.js)
+  - [gretro.js](http://mohayonao.github.io/gretro/build/gretro.js)
+  - [gretro.min.js](http://mohayonao.github.io/gretro/build/gretro.min.js)
 
 ```html
 <script src="/path/to/gretro.js"></script>
