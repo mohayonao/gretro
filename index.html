@@ -97,7 +97,12 @@
       var context = htmlCanvas.getContext("2d");
 
       var editor = CodeMirror(document.getElementById("editor"), {
-        value: "canvas\n  .stroke(15).fill(10).circle(320, 200, 150);",
+        value: [
+          "canvas.setTile(16, 0x33cc).stroke(15).fill([ 0, 14, 16 ])",
+          "  .polygon([",
+          "    [ 320, 80 ], [ 240, 320 ], [ 440, 160 ], [ 200, 160 ], [ 400, 320 ]",
+          "  ]);",
+        ].join("\n"),
         mode: "javascript",
         theme: "monokai",
         lineNumbers: true,
