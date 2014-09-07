@@ -418,7 +418,7 @@ module.exports = function(width, height, pixelSize, buffer) {
     ]
   };
 
-  if (buffer instanceof Uint8Array) {
+  if (buffer instanceof Uint8ClampedArray || buffer instanceof Uint8Array) {
     data.data = buffer;
   } else {
     data.data = new Uint8Array(width * height * pixelSize);
@@ -1687,7 +1687,7 @@ module.exports = function(gr) {
 var util = _dereq_("./utils");
 var used = [];
 
-exports.version = "0.2.2";
+exports.version = "0.2.3";
 
 exports.use = function(fn) {
   /* istanbul ignore else */
