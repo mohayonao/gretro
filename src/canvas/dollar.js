@@ -49,7 +49,7 @@ module.exports = function(width, height, pixelSize, buffer) {
     ]
   };
 
-  if (buffer instanceof Uint8Array) {
+  if (buffer instanceof Uint8ClampedArray || buffer instanceof Uint8Array) {
     data.data = buffer;
   } else {
     data.data = new Uint8Array(width * height * pixelSize);
