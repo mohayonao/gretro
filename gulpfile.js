@@ -1,10 +1,12 @@
 "use strict";
 
 var gulp = require("gulp");
+var browserify = require("browserify");
+var source = require("vinyl-source-stream");
+var buffer = require("vinyl-buffer");
 var jshint    = require("gulp-jshint");
 var mocha     = require("gulp-mocha");
 var istanbul  = require("gulp-istanbul");
-var browerify = require("gulp-browserify");
 var uglify    = require("gulp-uglify");
 var rename    = require("gulp-rename");
 
@@ -32,14 +34,13 @@ gulp.task("cover", function(cb) {
 });
 
 gulp.task("build", function() {
-  return gulp.src("index.js")
+  return browserify("./index.js")
+    .bundle()
     /* gretro.js */
-    .pipe(browerify({
-      standalone: "gretro"
-    }))
-    .pipe(rename("gretro.js"))
+    .pipe(source("gretro.js"))
     .pipe(gulp.dest("build"))
     /* gretro.min.js */
+    .pipe(buffer())
     .pipe(uglify())
     .pipe(rename("gretro.min.js"))
     .pipe(gulp.dest("build"));

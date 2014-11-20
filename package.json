@@ -1,7 +1,7 @@
 {
   "name": "gretro",
   "description": "Gretro is a JavaScript Graphic library for retro CG",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "author": "Nao Yonamine <mohayonao@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -15,20 +15,27 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "lint": "gulp lint",
+    "test": "gulp test",
+    "cover": "gulp cover",
+    "build": "gulp build",
+    "travis": "gulp travis"
   },
   "dependencies": {},
   "devDependencies": {
-    "chai": "^1.9.1",
+    "browserify": "^6.3.2",
+    "chai": "^1.10.0",
+    "coveralls": "^2.11.2",
     "gretro-text": "^0.1.0",
-    "gulp": "^3.8.7",
-    "gulp-browserify": "^0.5.0",
-    "gulp-istanbul": "^0.2.1",
-    "gulp-jshint": "^1.8.4",
-    "gulp-mocha": "^0.5.2",
+    "gulp": "^3.8.10",
+    "gulp-istanbul": "^0.3.1",
+    "gulp-jshint": "^1.9.0",
+    "gulp-mocha": "^2.0.0",
     "gulp-rename": "^1.2.0",
-    "gulp-uglify": "^0.3.1",
-    "jshint-stylish": "^0.4.0",
-    "png": "^3.0.3"
+    "gulp-uglify": "^1.0.1",
+    "jshint-stylish": "^1.0.0",
+    "png": "^3.0.3",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.0.0"
   }
 }
