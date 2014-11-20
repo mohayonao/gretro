@@ -4,12 +4,7 @@ node_js:
 env:
   global:
     - secure: "m5WsEXZKSwx9sH4+Eynp5fS0WMzFbWGvwmziotmhGGP16bYwsHNkeYZY9tmKl4XWxXEcpvdpt1Pq8NIGskM+VJ2jTClWdgnl5RuLt8tcRbwaGYBp4J4OVbpkT7LHxKUspCgG+krJic1JcCNCgMT7VU+4hc5u0kJ9uo/DaZrzd84="
-before_install:
-  - npm install -g gulp
-  - npm install -g coveralls
-before_script:
-  - npm install gulp
 script:
-  - gulp travis
+  - npm run travis
 after_success:
-  - coveralls < ./coverage/lcov.info
+  - $(npm bin)/coveralls < ./coverage/lcov.info
