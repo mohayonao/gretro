@@ -15,7 +15,11 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "lint": "gulp lint",
+    "test": "gulp test",
+    "cover": "gulp cover",
+    "build": "gulp build",
+    "travis": "gulp travis"
   },
   "dependencies": {},
   "devDependencies": {
