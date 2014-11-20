@@ -5,7 +5,7 @@ var used = [];
 
 var gretro = {};
 
-gretro.version = "0.2.4";
+gretro.version = "0.2.5";
 
 gretro.use = function(fn) {
   /* istanbul ignore else */
