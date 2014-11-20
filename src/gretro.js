@@ -3,15 +3,24 @@
 var util = require("./utils");
 var used = [];
 
-exports.version = "0.2.4";
+var gretro = {};
 
-exports.use = function(fn) {
+gretro.version = "0.2.5";
+
+gretro.use = function(fn) {
   /* istanbul ignore else */
   if (used.indexOf(fn) === -1) {
-    fn(this, util);
+    fn(gretro, util);
     used.push(fn);
   }
-  return this;
+  return gretro;
 };
 
-exports.use(require("./canvas"));
+gretro.use(require("./canvas"));
+
+/* istanbul ignore next */
+if (typeof global.window !== "undefined") {
+  global.window.gretro = gretro;
+}
+
+module.exports = gretro;
