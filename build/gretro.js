@@ -1,7 +1,7 @@
-!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.gretro=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-module.exports = _dereq_("./src/gretro");
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = require("./src/gretro");
 
-},{"./src/gretro":41}],2:[function(_dereq_,module,exports){
+},{"./src/gretro":41}],2:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -21,10 +21,10 @@ module.exports = function(gr) {
   });
 };
 
-},{}],3:[function(_dereq_,module,exports){
+},{}],3:[function(require,module,exports){
 "use strict";
 
-var dollar = _dereq_("./dollar");
+var dollar = require("./dollar");
 
 module.exports = function(gr, _) {
   /**
@@ -148,7 +148,7 @@ module.exports = function(gr, _) {
   };
 };
 
-},{"./dollar":9}],4:[function(_dereq_,module,exports){
+},{"./dollar":9}],4:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -210,7 +210,7 @@ module.exports = function(gr, _) {
   }
 };
 
-},{}],5:[function(_dereq_,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -231,7 +231,7 @@ module.exports = function(gr, _) {
   });
 };
 
-},{}],6:[function(_dereq_,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -256,7 +256,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],7:[function(_dereq_,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -279,7 +279,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],8:[function(_dereq_,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -366,7 +366,7 @@ module.exports = function(gr) {
   }
 };
 
-},{}],9:[function(_dereq_,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 var defaultColorPalette = new Uint8Array([
@@ -427,7 +427,7 @@ module.exports = function(width, height, pixelSize, buffer) {
   return data;
 };
 
-},{}],10:[function(_dereq_,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -459,7 +459,7 @@ module.exports = function(gr, _) {
   }
 };
 
-},{}],11:[function(_dereq_,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -526,7 +526,7 @@ module.exports = function(gr, _) {
   }
 };
 
-},{}],12:[function(_dereq_,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -540,7 +540,7 @@ module.exports = function(gr, _) {
   });
 };
 
-},{}],13:[function(_dereq_,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -560,7 +560,7 @@ module.exports = function(gr, _) {
   });
 };
 
-},{}],14:[function(_dereq_,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -587,7 +587,7 @@ module.exports = function(gr, _) {
   });
 };
 
-},{}],15:[function(_dereq_,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -601,7 +601,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],16:[function(_dereq_,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -649,7 +649,7 @@ module.exports = function(gr, _) {
   });
 };
 
-},{}],17:[function(_dereq_,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -721,7 +721,7 @@ module.exports = function(gr, _) {
   }
 };
 
-},{}],18:[function(_dereq_,module,exports){
+},{}],18:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -735,7 +735,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],19:[function(_dereq_,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -750,7 +750,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],20:[function(_dereq_,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -764,50 +764,50 @@ module.exports = function(gr) {
   });
 };
 
-},{}],21:[function(_dereq_,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
-  gr.use(_dereq_("./canvas"));
-  gr.use(_dereq_("./getRawData"));
-  gr.use(_dereq_("./getHeight"));
-  gr.use(_dereq_("./getWidth"));
-  gr.use(_dereq_("./getColor"));
-  gr.use(_dereq_("./setColor"));
-  gr.use(_dereq_("./getTile"));
-  gr.use(_dereq_("./setTile"));
-  gr.use(_dereq_("./getColorIndex"));
-  gr.use(_dereq_("./getRGB"));
-  gr.use(_dereq_("./getRGBA"));
-  gr.use(_dereq_("./stroke"));
-  gr.use(_dereq_("./noStroke"));
-  gr.use(_dereq_("./fill"));
-  gr.use(_dereq_("./noFill"));
-  gr.use(_dereq_("./clip"));
-  gr.use(_dereq_("./noClip"));
-  gr.use(_dereq_("./mask"));
-  gr.use(_dereq_("./noMask"));
-  gr.use(_dereq_("./clear"));
-  gr.use(_dereq_("./draw"));
-  gr.use(_dereq_("./point"));
-  gr.use(_dereq_("./line"));
-  gr.use(_dereq_("./polygon"));
-  gr.use(_dereq_("./triangle"));
-  gr.use(_dereq_("./quad"));
-  gr.use(_dereq_("./rect"));
-  gr.use(_dereq_("./arc"));
-  gr.use(_dereq_("./circle"));
-  gr.use(_dereq_("./ellipse"));
-  gr.use(_dereq_("./copy"));
-  gr.use(_dereq_("./paste"));
-  gr.use(_dereq_("./clone"));
-  gr.use(_dereq_("./toMask"));
-  gr.use(_dereq_("./toIndexedColor"));
-  gr.use(_dereq_("./toRGB"));
-  gr.use(_dereq_("./toRGBA"));
+  gr.use(require("./canvas"));
+  gr.use(require("./getRawData"));
+  gr.use(require("./getHeight"));
+  gr.use(require("./getWidth"));
+  gr.use(require("./getColor"));
+  gr.use(require("./setColor"));
+  gr.use(require("./getTile"));
+  gr.use(require("./setTile"));
+  gr.use(require("./getColorIndex"));
+  gr.use(require("./getRGB"));
+  gr.use(require("./getRGBA"));
+  gr.use(require("./stroke"));
+  gr.use(require("./noStroke"));
+  gr.use(require("./fill"));
+  gr.use(require("./noFill"));
+  gr.use(require("./clip"));
+  gr.use(require("./noClip"));
+  gr.use(require("./mask"));
+  gr.use(require("./noMask"));
+  gr.use(require("./clear"));
+  gr.use(require("./draw"));
+  gr.use(require("./point"));
+  gr.use(require("./line"));
+  gr.use(require("./polygon"));
+  gr.use(require("./triangle"));
+  gr.use(require("./quad"));
+  gr.use(require("./rect"));
+  gr.use(require("./arc"));
+  gr.use(require("./circle"));
+  gr.use(require("./ellipse"));
+  gr.use(require("./copy"));
+  gr.use(require("./paste"));
+  gr.use(require("./clone"));
+  gr.use(require("./toMask"));
+  gr.use(require("./toIndexedColor"));
+  gr.use(require("./toRGB"));
+  gr.use(require("./toRGBA"));
 };
 
-},{"./arc":2,"./canvas":3,"./circle":4,"./clear":5,"./clip":6,"./clone":7,"./copy":8,"./draw":10,"./ellipse":11,"./fill":12,"./getColor":13,"./getColorIndex":14,"./getHeight":15,"./getRGB":16,"./getRGBA":17,"./getRawData":18,"./getTile":19,"./getWidth":20,"./line":22,"./mask":23,"./noClip":24,"./noFill":25,"./noMask":26,"./noStroke":27,"./paste":28,"./point":29,"./polygon":30,"./quad":31,"./rect":32,"./setColor":33,"./setTile":34,"./stroke":35,"./toIndexedColor":36,"./toMask":37,"./toRGB":38,"./toRGBA":39,"./triangle":40}],22:[function(_dereq_,module,exports){
+},{"./arc":2,"./canvas":3,"./circle":4,"./clear":5,"./clip":6,"./clone":7,"./copy":8,"./draw":10,"./ellipse":11,"./fill":12,"./getColor":13,"./getColorIndex":14,"./getHeight":15,"./getRGB":16,"./getRGBA":17,"./getRawData":18,"./getTile":19,"./getWidth":20,"./line":22,"./mask":23,"./noClip":24,"./noFill":25,"./noMask":26,"./noStroke":27,"./paste":28,"./point":29,"./polygon":30,"./quad":31,"./rect":32,"./setColor":33,"./setTile":34,"./stroke":35,"./toIndexedColor":36,"./toMask":37,"./toRGB":38,"./toRGBA":39,"./triangle":40}],22:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -1016,7 +1016,7 @@ module.exports = function(gr, _) {
   }
 };
 
-},{}],23:[function(_dereq_,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1033,7 +1033,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],24:[function(_dereq_,module,exports){
+},{}],24:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1048,7 +1048,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],25:[function(_dereq_,module,exports){
+},{}],25:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1060,7 +1060,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],26:[function(_dereq_,module,exports){
+},{}],26:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1072,7 +1072,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],27:[function(_dereq_,module,exports){
+},{}],27:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1084,7 +1084,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],28:[function(_dereq_,module,exports){
+},{}],28:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1169,7 +1169,7 @@ module.exports = function(gr) {
   }
 };
 
-},{}],29:[function(_dereq_,module,exports){
+},{}],29:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -1191,7 +1191,7 @@ module.exports = function(gr, _) {
   });
 };
 
-},{}],30:[function(_dereq_,module,exports){
+},{}],30:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -1376,7 +1376,7 @@ module.exports = function(gr, _) {
   }
 };
 
-},{}],31:[function(_dereq_,module,exports){
+},{}],31:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1406,7 +1406,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],32:[function(_dereq_,module,exports){
+},{}],32:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -1455,7 +1455,7 @@ module.exports = function(gr, _) {
   }
 };
 
-},{}],33:[function(_dereq_,module,exports){
+},{}],33:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1473,7 +1473,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],34:[function(_dereq_,module,exports){
+},{}],34:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -1493,7 +1493,7 @@ module.exports = function(gr, _) {
   });
 };
 
-},{}],35:[function(_dereq_,module,exports){
+},{}],35:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -1507,7 +1507,7 @@ module.exports = function(gr, _) {
   });
 };
 
-},{}],36:[function(_dereq_,module,exports){
+},{}],36:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1525,7 +1525,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],37:[function(_dereq_,module,exports){
+},{}],37:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1550,7 +1550,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],38:[function(_dereq_,module,exports){
+},{}],38:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1599,7 +1599,7 @@ module.exports = function(gr) {
   });
 };
 
-},{}],39:[function(_dereq_,module,exports){
+},{}],39:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr, _) {
@@ -1655,7 +1655,7 @@ module.exports = function(gr, _) {
   });
 };
 
-},{}],40:[function(_dereq_,module,exports){
+},{}],40:[function(require,module,exports){
 "use strict";
 
 module.exports = function(gr) {
@@ -1681,13 +1681,13 @@ module.exports = function(gr) {
   });
 };
 
-},{}],41:[function(_dereq_,module,exports){
+},{}],41:[function(require,module,exports){
 "use strict";
 
-var util = _dereq_("./utils");
+var util = require("./utils");
 var used = [];
 
-exports.version = "0.2.3";
+exports.version = "0.2.4";
 
 exports.use = function(fn) {
   /* istanbul ignore else */
@@ -1698,9 +1698,9 @@ exports.use = function(fn) {
   return this;
 };
 
-exports.use(_dereq_("./canvas"));
+exports.use(require("./canvas"));
 
-},{"./canvas":21,"./utils":50}],42:[function(_dereq_,module,exports){
+},{"./canvas":21,"./utils":50}],42:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1720,7 +1720,7 @@ module.exports = function(ctx, name, method) {
   return this;
 };
 
-},{}],43:[function(_dereq_,module,exports){
+},{}],43:[function(require,module,exports){
 "use strict";
 
 function fromTileItems(items, tilePalette) {
@@ -1761,7 +1761,7 @@ module.exports = function(color, tilePalette) {
   return -1;
 };
 
-},{}],44:[function(_dereq_,module,exports){
+},{}],44:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1777,7 +1777,7 @@ module.exports = function(val, defaultVal) {
   return val;
 };
 
-},{}],45:[function(_dereq_,module,exports){
+},{}],45:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1802,7 +1802,7 @@ module.exports = function(child, parent) {
   return child;
 };
 
-},{}],46:[function(_dereq_,module,exports){
+},{}],46:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1817,10 +1817,10 @@ module.exports = function(cnv, fn) {
   }
 };
 
-},{}],47:[function(_dereq_,module,exports){
+},{}],47:[function(require,module,exports){
 "use strict";
 
-var inRange = _dereq_("./inRange");
+var inRange = require("./inRange");
 
 /**
  * inCanvas
@@ -1833,10 +1833,10 @@ module.exports = function(cnv, x, y) {
   return inRange(x, 0, cnv.$.width - 1) && inRange(y, 0, cnv.$.height - 1);
 };
 
-},{"./inRange":49}],48:[function(_dereq_,module,exports){
+},{"./inRange":49}],48:[function(require,module,exports){
 "use strict";
 
-var inRange = _dereq_("./inRange");
+var inRange = require("./inRange");
 
 /**
  * inClip
@@ -1849,7 +1849,7 @@ module.exports = function(cnv, x, y) {
   return inRange(x, cnv.$.minX, cnv.$.maxX) && inRange(y, cnv.$.minY, cnv.$.maxY);
 };
 
-},{"./inRange":49}],49:[function(_dereq_,module,exports){
+},{"./inRange":49}],49:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1863,39 +1863,39 @@ module.exports = function(num, min, max) {
   return min <= num && num <= max;
 };
 
-},{}],50:[function(_dereq_,module,exports){
+},{}],50:[function(require,module,exports){
 "use strict";
 
-exports.addMethod = _dereq_("./addMethod");
+exports.addMethod = require("./addMethod");
 
-exports.extend = _dereq_("./extend");
+exports.extend = require("./extend");
 
-exports.inRange = _dereq_("./inRange");
+exports.inRange = require("./inRange");
 
-exports.defaults = _dereq_("./defaults");
+exports.defaults = require("./defaults");
 
-exports.rgb2num = _dereq_("./rgb2num");
+exports.rgb2num = require("./rgb2num");
 
-exports.slice = _dereq_("./slice");
+exports.slice = require("./slice");
 
-exports.colorize = _dereq_("./colorize");
+exports.colorize = require("./colorize");
 
-exports.inCanvas = _dereq_("./inCanvas");
+exports.inCanvas = require("./inCanvas");
 
-exports.inClip = _dereq_("./inClip");
+exports.inClip = require("./inClip");
 
-exports.putPixel = _dereq_("./putPixel");
+exports.putPixel = require("./putPixel");
 
-exports.putLine = _dereq_("./putLine");
+exports.putLine = require("./putLine");
 
-exports.stroke = _dereq_("./stroke");
+exports.stroke = require("./stroke");
 
-exports.fill = _dereq_("./fill");
+exports.fill = require("./fill");
 
-},{"./addMethod":42,"./colorize":43,"./defaults":44,"./extend":45,"./fill":46,"./inCanvas":47,"./inClip":48,"./inRange":49,"./putLine":51,"./putPixel":52,"./rgb2num":53,"./slice":54,"./stroke":55}],51:[function(_dereq_,module,exports){
+},{"./addMethod":42,"./colorize":43,"./defaults":44,"./extend":45,"./fill":46,"./inCanvas":47,"./inClip":48,"./inRange":49,"./putLine":51,"./putPixel":52,"./rgb2num":53,"./slice":54,"./stroke":55}],51:[function(require,module,exports){
 "use strict";
 
-var inRange = _dereq_("./inRange");
+var inRange = require("./inRange");
 
 /**
  * putLine
@@ -1919,10 +1919,10 @@ module.exports = function(cnv, x1, x2, y, color) {
   }
 };
 
-},{"./inRange":49}],52:[function(_dereq_,module,exports){
+},{"./inRange":49}],52:[function(require,module,exports){
 "use strict";
 
-var inRange = _dereq_("./inRange");
+var inRange = require("./inRange");
 
 /**
  * putPixel
@@ -1940,7 +1940,7 @@ module.exports = function(cnv, x, y, color) {
   }
 };
 
-},{"./inRange":49}],53:[function(_dereq_,module,exports){
+},{"./inRange":49}],53:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1955,7 +1955,7 @@ module.exports = function(r, g, b) {
   return (r << 16) + (g << 8) + b;
 };
 
-},{}],54:[function(_dereq_,module,exports){
+},{}],54:[function(require,module,exports){
 "use strict";
 
 var slice = Array.prototype.slice;
@@ -1970,7 +1970,7 @@ module.exports = function(list, n) {
   return slice.call(list, n|0);
 };
 
-},{}],55:[function(_dereq_,module,exports){
+},{}],55:[function(require,module,exports){
 "use strict";
 
 /**
@@ -1985,6 +1985,4 @@ module.exports = function(cnv, fn) {
   }
 };
 
-},{}]},{},[1])
-(1)
-});
+},{}]},{},[1]);
