@@ -1,5 +1,6 @@
 # gretro
 [![NPM Version](http://img.shields.io/npm/v/gretro.svg?style=flat)](https://www.npmjs.org/package/gretro)
+[![Bower](https://img.shields.io/bower/v/gretro.svg?style=flat)](https://github.com/mohayonao/gretro)
 [![Build Status](http://img.shields.io/travis/mohayonao/gretro.svg?style=flat)](https://travis-ci.org/mohayonao/gretro)
 [![Coverage Status](http://img.shields.io/coveralls/mohayonao/gretro.svg?style=flat)](https://coveralls.io/r/mohayonao/gretro?branch=master)
 [![Dependency Status](http://img.shields.io/david/mohayonao/gretro.svg?style=flat)](https://david-dm.org/mohayonao/gretro)
@@ -26,6 +27,10 @@
 
   - [gretro.js](http://mohayonao.github.io/gretro/build/gretro.js)
   - [gretro.min.js](http://mohayonao.github.io/gretro/build/gretro.min.js)
+
+```sh
+$ bower install gretro
+```
 
 ```html
 <script src="/path/to/gretro.js"></script>
