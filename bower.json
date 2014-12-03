@@ -1,0 +1,23 @@
+{
+  "name": "gretro",
+  "main": "build/gretro.js",
+  "version": "0.2.5",
+  "homepage": "https://github.com/mohayonao/gretro",
+  "authors": [
+    "Nao Yonamine <mohayonao@gmail.com>"
+  ],
+  "description": "Gretro is a JavaScript library for retro CG",
+  "keywords": [
+    "graphics",
+    "vintage",
+    "retro"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
